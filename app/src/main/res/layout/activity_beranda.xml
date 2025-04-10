@@ -10,7 +10,7 @@
     android:padding="16dp"
     tools:context=".beranda">
 
-    <!-- Judul Aplikasi -->
+    <!-- nama halaman Aplikasi -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Jadwal Makan Ikan"
-                android:src="@drawable/kalender" />
+                android:src="@drawable/Kalender" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Jadwal Perawatan Ikan"
-                android:src="@drawable/perawatan" />
+                android:src="@drawable/Perawatan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Suhu Akuarium"
-                android:src="@drawable/ic_temperatur" />
+                android:src="@drawable/ic_Temperatur" />
 
             <TextView
                 android:layout_width="wrap_content"
