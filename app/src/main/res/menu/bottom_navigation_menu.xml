@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_Beranda"
+        android:icon="@drawable/berandaikon"
+        android:title="Beranda" />
+    <item
+        android:id="@+id/nav_Daftar_Ikan"
+        android:icon="@drawable/daftarikan"
+        android:title="Daftar Ikan" />
+    <item
+        android:id="@+id/nav_notifikasi"
+        android:icon="@drawable/notifikasi"
+        android:title="Notifikasi" />
+    <item
+        android:id="@+id/nav_profil"
+        android:icon="@drawable/profil"
+        android:title="Profil" />
+</menu>
