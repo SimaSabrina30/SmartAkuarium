@@ -41,7 +41,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Jadwal Makan Ikan"
-                android:src="@drawable/Kalender" />
+                android:src="@drawable/kalender" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Jadwal Perawatan Ikan"
-                android:src="@drawable/Perawatan" />
+                android:src="@drawable/perawatan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Suhu Akuarium"
-                android:src="@drawable/ic_Temperatur" />
+                android:src="@drawable/ic_temperatur" />
 
             <TextView
                 android:layout_width="wrap_content"
