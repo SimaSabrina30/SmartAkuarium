@@ -1,10 +1,10 @@
 package com.sima.smartakuarium;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import androidx.cardview.widget.CardView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class beranda extends AppCompatActivity {
 
@@ -13,11 +13,36 @@ public class beranda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beranda);
 
-        // Mengatur padding sesuai sistem bar
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        CardView cardJadwalMakan = findViewById(R.id.cardJadwalMakanIkan);
+
+        cardJadwalMakan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pastikan menggunakan huruf kapital sesuai nama class-nya
+                Intent intent = new Intent(beranda.this, jadwalmakanikan.class);
+                startActivity(intent);
+            }
         });
+        CardView cardJadwalPerawatanIkan = findViewById(R.id.cardJadwalPerawatanIkan);
+        cardJadwalPerawatanIkan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(beranda.this, jadwalperawatanikan.class);
+                startActivity(intent);
+            }
+        });
+
+        // Menambahkan CardView untuk Atur Suhu
+        CardView cardAturSuhu = findViewById(R.id.cardAturSuhu);
+        cardAturSuhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent untuk membuka halaman atur suhu akuarium
+                Intent intent = new Intent(beranda.this, atursuhu.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

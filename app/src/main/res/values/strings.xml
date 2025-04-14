@@ -2,4 +2,21 @@
     <string name="app_name">SmartAkuarium</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+
+    <!-- Opsi pengulangan untuk Spinner -->
+    <string-array name="repeat_options">
+        <item>Hanya sekali</item>
+        <item>Setiap hari</item>
+        <item>Setiap minggu</item>
+        <item>Setiap bulan</item>
+    </string-array>
+
+    <string-array name="perawatan_options">
+        <item>Ganti air</item>
+        <item>Bersihkan filter</item>
+        <item>Tambah vitamin</item>
+        <item>Cek suhu</item>
+        <item>Lainnya</item>
+    </string-array>
+
 </resources>

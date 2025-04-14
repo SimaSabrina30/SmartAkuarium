@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFFFFF" /> <!-- Ini membuat warnanya putih -->
+    <corners android:radius="16dp" /> <!-- Ini memberi efek sudut melengkung -->
+</shape>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Judul -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atur Suhu Akuarium"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:src="@drawable/kembali"
+            android:contentDescription="Kembali"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:onClick="onBackPressed" />
+
+        <!-- Suhu Saat Ini -->
+        <TextView
+            android:id="@+id/currentTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suhu Saat Ini: 28°C"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginTop="32dp"/>
+
+        <!-- Input Suhu Target -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suhu Target:"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp"/>
+        <EditText
+            android:id="@+id/targetTempInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contoh: 27"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp" />
+
+        <!-- Input Suhu Minimum -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suhu Minimum:"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/minTempInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contoh: 25"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp" />
+
+        <!-- Input Suhu Maksimum -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suhu Maksimum:"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"/>
+        <EditText
+            android:id="@+id/maxTempInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contoh: 30"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp" />
+
+        <!-- Tombol Simpan -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan Pengaturan"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_gradientbutton"
+            android:layout_marginTop="32dp"/>
+    </LinearLayout>
+</ScrollView>
