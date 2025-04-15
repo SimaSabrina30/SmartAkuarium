@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Judul -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atur jadwal perawatan ikan"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginTop="64dp"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:src="@drawable/kembali"
+        android:contentDescription="Kembali"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:onClick="onBackPressed" />
+
+
+    <!-- Kartu Form Input -->
+    <LinearLayout
+        android:id="@+id/inputCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/titleText"
+        android:layout_margin="24dp"
+        android:background="@drawable/backgroundputih"
+        android:padding="16dp">
+
+        <!-- Input Waktu -->
+        <EditText
+            android:id="@+id/timeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Waktu"
+            android:drawableEnd="@drawable/jam"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="time"
+            android:autofillHints="time"
+            android:background="@drawable/backgroundputih"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:minHeight="48dp"
+            android:padding="12dp" />
+
+        <!-- Label Jenis Perawatan -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jenis Perawatan"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/perawatanSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:minHeight="48dp"
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp"
+            android:spinnerMode="dropdown"
+            android:entries="@array/perawatan_options" />
+
+        <!-- Fitur Ulangi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ulangi"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/repeatSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:minHeight="48dp"
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp"
+            android:spinnerMode="dropdown"
+            android:entries="@array/repeat_options" />
+
+    </LinearLayout>
+
+    <!-- Tombol Simpan -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan Jadwal"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_gradientbutton"
+        android:layout_below="@id/inputCard"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <!-- Daftar Jadwal yang Tersimpan -->
+    <LinearLayout
+        android:id="@+id/savedScheduleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/saveButton"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
+    <!-- Navigasi Bawah -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</RelativeLayout>
