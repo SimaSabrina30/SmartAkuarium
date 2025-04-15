@@ -84,13 +84,4 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation_menu"
-        android:background="@drawable/bg_navbar"
-        app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav"/>
 </RelativeLayout>
