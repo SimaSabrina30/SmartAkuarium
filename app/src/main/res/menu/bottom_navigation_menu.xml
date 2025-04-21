@@ -1,20 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_beranda"
-        android:icon="@drawable/berandaikon"
-        android:title="Beranda"/>
+        android:id="@+id/nav_home"
+        android:title="Beranda"
+        android:icon="@drawable/berandaikon" />
     <item
-        android:id="@+id/menu_daftarikan"
-        android:icon="@drawable/daftar"
-        android:title="Daftar Ikan"/>
+        android:id="@+id/nav_schedule"
+        android:title="Ikan"
+        android:icon="@drawable/daftar" />
     <item
-        android:id="@+id/menu_notifikasi"
-        android:icon="@drawable/notifikasi"
-        android:title="Notifikasi"/>
-    <item
-        android:id="@+id/menu_profil"
-        android:icon="@drawable/profil"
-        android:title="Profil"/>
+        android:id="@+id/nav_profile"
+        android:title="Profil"
+        android:icon="@drawable/profil" />
 </menu>
-

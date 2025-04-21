@@ -11,7 +11,7 @@ public class detailakuarium extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detailakuarium);
 
         btnRefresh = findViewById(R.id.btnRefresh);
         btnRefresh.setOnClickListener(view -> {

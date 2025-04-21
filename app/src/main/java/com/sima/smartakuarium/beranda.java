@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.LinearLayout;
 
 public class beranda extends AppCompatActivity {
 
@@ -13,36 +14,43 @@ public class beranda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beranda);
 
+        // Navigasi ke Jadwal Makan Ikan
         CardView cardJadwalMakan = findViewById(R.id.cardJadwalMakanIkan);
-
-        cardJadwalMakan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Pastikan menggunakan huruf kapital sesuai nama class-nya
-                Intent intent = new Intent(beranda.this, jadwalmakanikan.class);
-                startActivity(intent);
-            }
+        cardJadwalMakan.setOnClickListener(v -> {
+            Intent intent = new Intent(beranda.this, jadwalmakanikan.class);
+            startActivity(intent);
         });
+
+        // Navigasi ke Jadwal Perawatan Ikan
         CardView cardJadwalPerawatanIkan = findViewById(R.id.cardJadwalPerawatanIkan);
-        cardJadwalPerawatanIkan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(beranda.this, jadwalperawatanikan.class);
-                startActivity(intent);
-            }
+        cardJadwalPerawatanIkan.setOnClickListener(v -> {
+            Intent intent = new Intent(beranda.this, jadwalperawatanikan.class);
+            startActivity(intent);
         });
 
-        // Menambahkan CardView untuk Atur Suhu
+        // Navigasi ke Atur Suhu
         CardView cardAturSuhu = findViewById(R.id.cardAturSuhu);
-        cardAturSuhu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Intent untuk membuka halaman atur suhu akuarium
-                Intent intent = new Intent(beranda.this, atursuhu.class);
-                startActivity(intent);
-            }
+        cardAturSuhu.setOnClickListener(v -> {
+            Intent intent = new Intent(beranda.this, atursuhu.class);
+            startActivity(intent);
         });
 
+        // Navigasi Manual Bottom Navigation
+        LinearLayout navSchedule = findViewById(R.id.nav_schedule);
+        navSchedule.setOnClickListener(v -> {
+            Intent intent = new Intent(beranda.this, daftarikan.class);
+            startActivity(intent);
+        });
 
+        //LinearLayout navProfile = findViewById(R.id.nav_profile);
+      //  navProfile.setOnClickListener(v -> {
+           // Intent intent = new Intent(beranda.this, profil.class);
+            //startActivity(intent);
+        //});
+
+        LinearLayout navHome = findViewById(R.id.nav_home);
+        navHome.setOnClickListener(v -> {
+            // Sudah di halaman ini, tidak melakukan apa-apa atau bisa refresh
+        });
     }
 }
