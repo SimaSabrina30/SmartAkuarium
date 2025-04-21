@@ -35,24 +35,22 @@ public class beranda extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Bottom Navigation - Jadwal
+        // Navigasi Manual Bottom Navigation
         LinearLayout navSchedule = findViewById(R.id.nav_schedule);
         navSchedule.setOnClickListener(v -> {
             Intent intent = new Intent(beranda.this, daftarikan.class);
             startActivity(intent);
         });
 
-        // Bottom Navigation - Profil (ini bagian yang kamu butuhkan)
-        LinearLayout navProfile = findViewById(R.id.nav_profile);
-        navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(beranda.this, ProfileActivity.class);
-            startActivity(intent);
-        });
+        //LinearLayout navProfile = findViewById(R.id.nav_profile);
+      //  navProfile.setOnClickListener(v -> {
+           // Intent intent = new Intent(beranda.this, profil.class);
+            //startActivity(intent);
+        //});
 
-        // Bottom Navigation - Home
         LinearLayout navHome = findViewById(R.id.nav_home);
         navHome.setOnClickListener(v -> {
-            // Sudah di halaman ini, tidak melakukan apa-apa
+            // Sudah di halaman ini, tidak melakukan apa-apa atau bisa refresh
         });
     }
 }

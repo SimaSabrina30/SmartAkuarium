@@ -11,4 +11,6 @@
         android:id="@+id/nav_profile"
         android:title="Profil"
         android:icon="@drawable/profil" />
+
+
 </menu>

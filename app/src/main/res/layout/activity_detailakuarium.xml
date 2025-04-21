@@ -27,13 +27,18 @@
                 android:gravity="center_vertical">
 
                 <ImageButton
-                    android:id="@+id/btnBack"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/kembali"
+                    android:id="@+id/backButton"
+                    android:src="@drawable/kembali"
                     android:contentDescription="Kembali"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:padding="8dp"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:onClick="onBackPressed" />
 
                 <TextView
                     android:id="@+id/title"

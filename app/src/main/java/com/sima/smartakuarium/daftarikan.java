@@ -2,14 +2,10 @@ package com.sima.smartakuarium;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class daftarikan extends AppCompatActivity {
 
@@ -22,37 +18,36 @@ public class daftarikan extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.btnBack);
         backButton.setOnClickListener(view -> finish());
 
-        // Setup tombol detail
-        setupDetailButtonListeners();
+        // Tombol Detail Ikan
+        Button btnDetail1 = findViewById(R.id.btnDetail1);
+        Button btnDetail2 = findViewById(R.id.btnDetail2);
 
-        // Bottom Navigation
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
-        bottomNav.setSelectedItemId(R.id.nav_schedule);
+        btnDetail1.setOnClickListener(v -> openDetail());
+        btnDetail2.setOnClickListener(v -> openDetail());
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.nav_home) {
-                startActivity(new Intent(this, beranda.class));
-                overridePendingTransition(0, 0);
-                return true;
-            } else if (itemId == R.id.nav_schedule) {
-                return true;
-            }
-            return false;
+        // Manual Bottom Navigation
+        LinearLayout navHome = findViewById(R.id.nav_home);
+        LinearLayout navSchedule = findViewById(R.id.nav_schedule);
+        LinearLayout navProfile = findViewById(R.id.nav_profile);
+
+        navHome.setOnClickListener(v -> {
+            Intent intent = new Intent(daftarikan.this, beranda.class);
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        navSchedule.setOnClickListener(v -> {
+            // Sudah di halaman ini
+        });
+
+        navProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(daftarikan.this, profil.class); // pastikan ada activity profil.java
+            startActivity(intent);
         });
     }
 
-    private void setupDetailButtonListeners() {
-        LinearLayout listContainer = findViewById(R.id.listContainer);
-        for (int i = 0; i < listContainer.getChildCount(); i++) {
-            View itemView = listContainer.getChildAt(i);
-            Button btnDetail = itemView.findViewById(R.id.btnDetail);
-            if (btnDetail != null) {
-                btnDetail.setOnClickListener(v -> {
-                    Intent intent = new Intent(daftarikan.this, detailakuarium.class);
-                    startActivity(intent);
-                });
-            }
-        }
+    private void openDetail() {
+        Intent intent = new Intent(daftarikan.this, detailakuarium.class);
+        startActivity(intent);
     }
 }
