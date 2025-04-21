@@ -41,7 +41,7 @@ public class daftarikan extends AppCompatActivity {
         });
 
         navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(daftarikan.this, profil.class); // pastikan ada activity profil.java
+            Intent intent = new Intent(daftarikan.this, ProfileActivity.class);
             startActivity(intent);
         });
     }
