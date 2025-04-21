@@ -2,6 +2,7 @@ package com.sima.smartakuarium;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     EditText etUsername, etPassword;
     Button btnSignIn;
     TextView tvForgotPassword;
+    ImageView ivTogglePassword;
+    boolean isPasswordVisible = false; // Status toggle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,22 @@ public class MainActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+        ivTogglePassword = findViewById(R.id.ivTogglePassword);
+
+        // Toggle password visibility
+        ivTogglePassword.setOnClickListener(v -> {
+            if (isPasswordVisible) {
+                // Sembunyikan password
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                ivTogglePassword.setImageResource(R.drawable.ic_eye);
+            } else {
+                // Tampilkan password
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                ivTogglePassword.setImageResource(R.drawable.ic_eye);
+            }
+            etPassword.setSelection(etPassword.getText().length()); // Geser kursor ke akhir
+            isPasswordVisible = !isPasswordVisible;
+        });
 
         // Tombol Sign In
         btnSignIn.setOnClickListener(new View.OnClickListener() {

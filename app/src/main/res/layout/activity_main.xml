@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
+    android:background="@drawable/aquarium"
     android:padding="24dp">
 
-    <!-- Kontainer isi form -->
+    <!-- Form Login -->
     <LinearLayout
         android:id="@+id/layoutForm"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Welcome To"
-            android:textSize="28sp"
+            android:textSize="30sp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
@@ -30,58 +30,99 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Atlantis Petshop dan Aquatic"
-            android:textSize="16sp"
-            android:textColor="#CCCCCC"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp" />
 
-        <!-- Username -->
-        <EditText
-            android:id="@+id/etUsername"
+        <!-- Username Field -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/username"
+            android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:padding="12dp"
             android:layout_marginTop="40dp"
-            android:textColor="#000000"
-            android:textColorHint="#000000" />
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
 
-        <!-- Password -->
-        <EditText
-            android:id="@+id/etPassword"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_user_vector"
+                android:tint="#808080" />
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Username"
+                android:paddingStart="12dp"
+                android:textColor="#808080"
+                android:textColorHint="#808080"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <!-- Password Field with Toggle -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/password"
+            android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:padding="12dp"
-            android:inputType="textPassword"
             android:layout_marginTop="20dp"
-            android:textColor="#000000"
-            android:textColorHint="#000000" />
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp">
 
-        <!-- Forgot Password -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_key"
+                android:tint="#808080" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Password"
+                android:paddingStart="12dp"
+                android:inputType="textPassword"
+                android:textColor="#808080"
+                android:textColorHint="#808080"
+                android:background="@android:color/transparent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivTogglePassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_eye_off"
+                android:tint="#808080"
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Lupa Password -->
         <TextView
             android:id="@+id/tvForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot Password?"
-            android:textColor="#BBBBBB"
+            android:textColor="#133568"
             android:textSize="14sp"
             android:layout_gravity="end"
             android:layout_marginTop="8dp" />
     </LinearLayout>
 
-    <!-- Tombol Sign In di bagian bawah -->
+    <!-- Tombol Sign In -->
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="283dp"
+        android:layout_marginBottom="450dp"
         android:background="@drawable/btn_gradientbutton"
         android:text="Sign In"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
-
 </RelativeLayout>

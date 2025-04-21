@@ -12,38 +12,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartAkuarium"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
         <!-- Aktivitas utama -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Beranda -->
-        <activity android:name=".beranda" android:exported="false" />
-
-        <!-- Halaman detail akuarium -->
-        <activity android:name=".detailakuarium" android:exported="false" />
-
-        <!-- Halaman daftar ikan -->
-        <activity android:name=".daftarikan" android:exported="false" />
-
-        <!-- Jadwal makan dan perawatan -->
-        <activity android:name=".jadwalmakanikan" android:exported="false" />
-        <activity android:name=".jadwalperawatanikan" android:exported="false" />
-
-        <!-- Pengaturan suhu -->
-        <activity android:name=".atursuhu" android:exported="false" />
-
-        <!-- Jika ingin gunakan AlarmReceiver, buka komentar ini:
-        <receiver
-            android:name=".AlarmReceiver"
+        </activity> <!-- Beranda -->
+        <activity
+            android:name=".beranda"
+            android:exported="false" /> <!-- Halaman detail akuarium -->
+        <activity
+            android:name=".detailakuarium"
+            android:exported="false" /> <!-- Halaman daftar ikan -->
+        <activity
+            android:name=".daftarikan"
+            android:exported="false" /> <!-- Jadwal makan dan perawatan -->
+        <activity
+            android:name=".jadwalmakanikan"
             android:exported="false" />
-        -->
+        <activity
+            android:name=".jadwalperawatanikan"
+            android:exported="false" /> <!-- Pengaturan suhu -->
+        <activity
+            android:name=".atursuhu"
+            android:exported="false" />
     </application>
 
 </manifest>
