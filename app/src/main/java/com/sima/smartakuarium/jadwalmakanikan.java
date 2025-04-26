@@ -1,6 +1,7 @@
 package com.sima.smartakuarium;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,9 +37,18 @@ public class jadwalmakanikan extends AppCompatActivity {
             return insets;
         });
 
+        // Inisialisasi komponen UI
         timeInput = findViewById(R.id.timeInput);
         savedScheduleLayout = findViewById(R.id.savedScheduleLayout);
         Button saveButton = findViewById(R.id.saveButton);
+        ImageButton backButton = findViewById(R.id.backButton); // Tambahan tombol back
+
+        // Fungsi tombol kembali
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(jadwalmakanikan.this, beranda.class);
+            startActivity(intent);
+            finish(); // Menutup activity sekarang
+        });
 
         // Time Picker
         timeInput.setOnClickListener(v -> {

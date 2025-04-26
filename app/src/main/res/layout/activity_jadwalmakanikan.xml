@@ -3,33 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/aquarium"
     android:id="@+id/main">
 
-    <!-- Judul  -->
+    <!-- Judul -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Atur jadwal makan ikan"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:layout_marginTop="64dp"
-        android:layout_centerHorizontal="true"/>
+        android:text="Jadwal Makan Ikan"
+        android:textColor="#133568"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true" />
 
+    <!-- Tombol Back -->
     <ImageButton
         android:id="@+id/backButton"
         android:src="@drawable/kembali"
         android:contentDescription="Kembali"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/titleText"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="8dp"
-        android:onClick="onBackPressed" />
+        android:background="@android:color/transparent"
+        app:tint="#FFFFFF" />
 
     <!-- Kartu Form Input -->
     <LinearLayout
@@ -37,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/titleText"
+        android:layout_below="@id/backButton"
         android:layout_margin="24dp"
         android:background="@drawable/backgroundputih"
         android:padding="16dp">
@@ -73,14 +74,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-        android:background="@drawable/backgroundputih"
-        android:padding="12dp"
-        android:spinnerMode="dropdown"
-        android:layout_marginTop="4dp"
-        android:entries="@array/repeat_options"
-        android:textAlignment="center"
-        android:dropDownVerticalOffset="12dp" />
-
+            android:background="@drawable/backgroundputih"
+            android:padding="12dp"
+            android:spinnerMode="dropdown"
+            android:layout_marginTop="4dp"
+            android:entries="@array/repeat_options"
+            android:textAlignment="center"
+            android:dropDownVerticalOffset="12dp" />
     </LinearLayout>
 
     <!-- Tombol Simpan -->
@@ -96,7 +96,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
-    <!-- Daftar Jadwal yang Tersimpan -->
+    <!-- Daftar Jadwal -->
     <LinearLayout
         android:id="@+id/savedScheduleLayout"
         android:layout_width="match_parent"
@@ -106,5 +106,4 @@
         android:layout_marginTop="12dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
-
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +34,18 @@ public class atursuhu extends AppCompatActivity {
         });
 
         // Inisialisasi View
-        currentTemperatureText = findViewById(R.id.currentTemperature);
+        currentTemperatureText = findViewById(R.id.currentTemperatureText);
         targetTempInput = findViewById(R.id.targetTempInput);
         minTempInput = findViewById(R.id.minTempInput);
         maxTempInput = findViewById(R.id.maxTempInput);
         saveButton = findViewById(R.id.saveButton);
+
+        // Tombol kembali
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> {
+            finish(); // Menutup aktivitas dan kembali ke halaman sebelumnya
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); // (opsional) animasi transisi
+        });
 
         // Set suhu saat ini (dummy - nanti bisa dari sensor/Bluetooth/Internet)
         currentTemperatureText.setText("Suhu Saat Ini: 28°C");
@@ -47,12 +55,27 @@ public class atursuhu extends AppCompatActivity {
 
         // Tombol Simpan ditekan
         saveButton.setOnClickListener(v -> {
-            String targetTemp = targetTempInput.getText().toString().trim();
-            String minTemp = minTempInput.getText().toString().trim();
-            String maxTemp = maxTempInput.getText().toString().trim();
+            String targetTempStr = targetTempInput.getText().toString().trim();
+            String minTempStr = minTempInput.getText().toString().trim();
+            String maxTempStr = maxTempInput.getText().toString().trim();
 
-            if (targetTemp.isEmpty()) {
+            if (targetTempStr.isEmpty()) {
                 Toast.makeText(this, "Masukkan suhu target!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Validasi angka (jika diisi)
+            double targetTemp = Double.parseDouble(targetTempStr);
+            double minTemp = minTempStr.isEmpty() ? 0 : Double.parseDouble(minTempStr);
+            double maxTemp = maxTempStr.isEmpty() ? 0 : Double.parseDouble(maxTempStr);
+
+            if (!minTempStr.isEmpty() && targetTemp < minTemp) {
+                Toast.makeText(this, "Suhu target tidak boleh lebih kecil dari suhu minimum!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!maxTempStr.isEmpty() && targetTemp > maxTemp) {
+                Toast.makeText(this, "Suhu target tidak boleh lebih besar dari suhu maksimum!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -60,19 +83,23 @@ public class atursuhu extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            // Menyimpan data suhu
-            editor.putString("targetTemp", targetTemp);
-            editor.putString("minTemp", minTemp);
-            editor.putString("maxTemp", maxTemp);
+            editor.putString("targetTemp", targetTempStr);
+            editor.putString("minTemp", minTempStr);
+            editor.putString("maxTemp", maxTempStr);
             editor.apply(); // Simpan data
 
-            // Menampilkan pesan
-            String message = "Suhu target: " + targetTemp + "°C";
-            if (!minTemp.isEmpty() && !maxTemp.isEmpty()) {
-                message += "\nBatas Min: " + minTemp + "°C, Maks: " + maxTemp + "°C";
+            // Menampilkan pesan sukses
+            String message = "Suhu target: " + targetTempStr + "°C";
+            if (!minTempStr.isEmpty() && !maxTempStr.isEmpty()) {
+                message += "\nBatas Min: " + minTempStr + "°C, Maks: " + maxTempStr + "°C";
             }
 
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+            // Kosongkan input setelah simpan
+            targetTempInput.setText("");
+            minTempInput.setText("");
+            maxTempInput.setText("");
         });
     }
 
@@ -92,7 +119,7 @@ public class atursuhu extends AppCompatActivity {
         String maxTemp = sharedPreferences.getString("maxTemp", "0");
 
         // Menampilkan data pada UI
-        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Bisa diganti dengan sensor/Internet
+        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Bisa diganti dengan data aktual
         targetTempInput.setText(targetTemp);
         minTempInput.setText(minTemp);
         maxTempInput.setText(maxTemp);

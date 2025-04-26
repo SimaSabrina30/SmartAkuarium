@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
+    android:background="@drawable/aquarium"> <!-- Background aquarium -->
 
     <!-- Konten scrollable -->
     <ScrollView
@@ -38,17 +38,23 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="8dp"
-                    android:onClick="onBackPressed" />
+                    app:tint="#FFFFFF"
+                    android:onClick="onBackPressed"
+                    android:background="@android:color/transparent"/>
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginEnd="48dp"
                     android:text="Detail Akuarium"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textColor="#133568"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
             </LinearLayout>
 
             <!-- Kartu Informasi -->
@@ -73,7 +79,7 @@
                         android:layout_height="60dp"
                         android:scaleType="centerCrop"
                         android:layout_marginEnd="12dp"
-                        android:background="@drawable/rounded_image_bg" />
+                        android:background="@drawable/rounded_image_bg"/>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -85,12 +91,12 @@
                             android:textStyle="bold"
                             android:textSize="16sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
 
                         <TextView
                             android:text="Akuarium 1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -100,22 +106,22 @@
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="pH: 6.5 - 7.5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Suhu: 24 - 30°C"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Keterangan: Air harus jernih dan memiliki filtrasi yang baik"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <!-- Air Terpantau -->
                 <TextView
@@ -123,32 +129,32 @@
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Jam: 13:20"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Tanggal: 25-03-2025"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="pH: 6.5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Suhu: 27°C"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:text="Keterangan: Air jernih"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <!-- Tombol Refresh -->
@@ -160,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

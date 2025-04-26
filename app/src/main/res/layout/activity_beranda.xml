@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#101010"
+    android:background="@drawable/aquarium"
     android:padding="16dp"
     tools:context=".beranda">
 
@@ -15,11 +15,11 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Atlantis Petshop and Aquatic"
+        android:text="Atlantis Petshop dan Aquatic"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#133568"
         android:layout_marginBottom="32dp" />
 
     <!-- Card 1: Atur Jadwal Makan Ikan -->
@@ -28,60 +28,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="20dp">
+        app:cardElevation="6dp"
+        app:cardCornerRadius="24dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:gravity="center_vertical"
+            android:padding="20dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Jadwal Makan Ikan"
-                android:src="@drawable/kalender" />
+                android:src="@drawable/kalender"
+                app:tint="#133568" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Atur jadwal makan ikan"
-                android:textSize="16sp"
-                android:textColor="#000000" />
+                android:text="Atur Jadwal Makan Ikan"
+                android:textSize="18sp"
+                android:textColor="#133568"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Card 2: Atur Jadwal Perawatan Ikan -->
+    <!-- Card 2: Jadwal Perawatan Ikan -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardJadwalPerawatanIkan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="24dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:gravity="center_vertical"
+            android:padding="20dp">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="Icon Perawatan Ikan"
                 android:src="@drawable/perawatan"
-                android:contentDescription="Perawatan Ikan" />
+                app:tint="#133568" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jadwal Perawatan Ikan"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp" />
+                android:textSize="18sp"
+                android:textColor="#133568"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -91,34 +100,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="24dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:gravity="center_vertical"
+            android:padding="20dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="Icon Suhu Akuarium"
-                android:src="@drawable/ic_temperatur" />
+                android:src="@drawable/ic_temperatur"
+                app:tint="#133568" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Atur suhu akuarium"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:layout_gravity="center_vertical" />
+                android:text="Atur Suhu Akuarium"
+                android:textSize="18sp"
+                android:textColor="#133568"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Space for content before Bottom Navigation -->
+    <!-- Spacer sebelum bottom nav -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -159,7 +171,7 @@
                 android:textColor="#000000" />
         </LinearLayout>
 
-        <!-- Jadwal -->
+        <!-- Daftar Ikan -->
         <LinearLayout
             android:id="@+id/nav_schedule"
             android:layout_width="0dp"
