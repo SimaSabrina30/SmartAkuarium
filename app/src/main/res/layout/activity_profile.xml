@@ -4,18 +4,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
+    android:background="@drawable/aquarium"
     android:padding="16dp">
 
-    <!-- Tombol back -->
+    <!-- Tombol back putih -->
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:background="@drawable/baseline_arrow_back_24"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:background="@android:color/transparent"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
-        android:contentDescription="Kembali" />
+        android:contentDescription="Kembali"
+        app:tint="#FFFFFF"/>
 
     <!-- Judul -->
     <TextView
@@ -23,9 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Profil Pengguna"
-        android:textColor="#FFFFFF"
+        android:textColor="#133568"
         android:textStyle="bold"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/btnBack" />
 
@@ -62,7 +64,8 @@
         android:textStyle="bold"
         android:layout_below="@id/fotoProfil"
         android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <TextView
         android:id="@+id/txtNama"
@@ -71,7 +74,8 @@
         android:text="Putri Aqila Shaveena"
         android:textColor="#CCCCCC"
         android:layout_below="@id/labelNama"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <View
         android:id="@+id/line1"
@@ -79,7 +83,9 @@
         android:layout_height="1dp"
         android:background="#888888"
         android:layout_below="@id/txtNama"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <!-- Email -->
     <TextView
@@ -90,7 +96,8 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_below="@id/line1"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <TextView
         android:id="@+id/txtEmail"
@@ -99,7 +106,8 @@
         android:text="Putriaqila.shaveena@gmail.com"
         android:textColor="#CCCCCC"
         android:layout_below="@id/labelEmail"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <View
         android:id="@+id/line2"
@@ -107,7 +115,9 @@
         android:layout_height="1dp"
         android:background="#888888"
         android:layout_below="@id/txtEmail"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <!-- Nomor Telepon -->
     <TextView
@@ -118,7 +128,8 @@
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         android:layout_below="@id/line2"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <TextView
         android:id="@+id/txtTelepon"
@@ -127,7 +138,8 @@
         android:text="+62 812 3456 7891"
         android:textColor="#CCCCCC"
         android:layout_below="@id/labelTelepon"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <View
         android:id="@+id/line3"
@@ -135,47 +147,9 @@
         android:layout_height="1dp"
         android:background="#888888"
         android:layout_below="@id/txtTelepon"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Tanggal Lahir -->
-    <TextView
-        android:id="@+id/labelTglLahir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tanggal Lahir"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_below="@id/line3"
-        android:layout_marginHorizontal="8dp" />
-
-    <RelativeLayout
-        android:id="@+id/containerTglLahir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelTglLahir"
-        android:layout_marginHorizontal="8dp">
-
-        <TextView
-            android:id="@+id/txtTglLahir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="24 - 03 - 1993"
-            android:textColor="#CCCCCC" />
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/kalender"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/line4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#888888"
-        android:layout_below="@id/containerTglLahir"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <!-- Tombol Logout -->
     <Button
@@ -186,7 +160,8 @@
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_gradientbutton"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="8dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
 </RelativeLayout>
