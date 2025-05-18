@@ -5,13 +5,14 @@
     android:background="@drawable/aquarium"
     android:padding="24dp">
 
-    <!-- Form Login -->
+    <!-- Form Login diletakkan di atas -->
     <LinearLayout
         android:id="@+id/layoutForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp">
 
         <!-- Judul -->
         <TextView
@@ -23,7 +24,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"/>
+            android:layout_marginBottom="4dp" />
 
         <TextView
             android:id="@+id/tvSubTitle"
@@ -33,7 +34,7 @@
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp" />
+            android:layout_marginBottom="32dp" />
 
         <!-- Username Field -->
         <LinearLayout
@@ -41,7 +42,7 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="12dp">
 
@@ -69,7 +70,7 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="12dp">
 
@@ -111,7 +112,7 @@
             android:textColor="#133568"
             android:textSize="14sp"
             android:layout_gravity="end"
-            android:layout_marginTop="8dp" />
+            android:layout_marginBottom="32dp" />
     </LinearLayout>
 
     <!-- Tombol Sign In -->
@@ -119,10 +120,22 @@
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="450dp"
+        android:layout_below="@id/layoutForm"
+        android:layout_marginTop="24dp"
         android:background="@drawable/btn_gradientbutton"
         android:text="Sign In"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
+
+    <!-- Teks Sign Up -->
+    <TextView
+        android:id="@+id/tvSignUpPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't Have An Account? Sign Up"
+        android:textColor="#133568"
+        android:textSize="14sp"
+        android:layout_below="@id/btnSignIn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 </RelativeLayout>
