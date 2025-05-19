@@ -42,7 +42,7 @@ public class beranda extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Bottom Navigation - Profil (ini bagian yang kamu butuhkan)
+        // Bottom Navigation - Profil
         LinearLayout navProfile = findViewById(R.id.nav_profile);
         navProfile.setOnClickListener(v -> {
             Intent intent = new Intent(beranda.this, ProfileActivity.class);
@@ -53,6 +53,13 @@ public class beranda extends AppCompatActivity {
         LinearLayout navHome = findViewById(R.id.nav_home);
         navHome.setOnClickListener(v -> {
             // Sudah di halaman ini, tidak melakukan apa-apa
+        });
+
+        // Tombol Notifikasi (ditambahkan)
+        LinearLayout navNotification = findViewById(R.id.nav_notification);
+        navNotification.setOnClickListener(v -> {
+            Intent intent = new Intent(beranda.this, notifikasi.class);
+            startActivity(intent);
         });
     }
 }

@@ -188,7 +188,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
+    <!-- Manual Bottom Navigation -->
     <LinearLayout
         android:id="@+id/manual_bottom_nav"
         android:layout_width="match_parent"
@@ -196,8 +196,9 @@
         android:orientation="horizontal"
         android:background="@drawable/backgroundputih"
         android:paddingVertical="8dp"
-        android:weightSum="3">
+        android:weightSum="4"> <!-- Perbarui weightSum menjadi 4 -->
 
+        <!-- Beranda -->
         <LinearLayout
             android:id="@+id/nav_home"
             android:layout_width="0dp"
@@ -214,7 +215,6 @@
                 android:layout_height="24dp"
                 android:src="@drawable/berandaikon"
                 android:contentDescription="Beranda" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -223,6 +223,7 @@
                 android:textColor="#000000" />
         </LinearLayout>
 
+        <!-- Daftar Ikan -->
         <LinearLayout
             android:id="@+id/nav_schedule"
             android:layout_width="0dp"
@@ -239,7 +240,6 @@
                 android:layout_height="24dp"
                 android:src="@drawable/daftar"
                 android:contentDescription="Daftar Ikan" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -248,6 +248,32 @@
                 android:textColor="#000000" />
         </LinearLayout>
 
+        <!-- Notifikasi -->
+        <LinearLayout
+            android:id="@+id/nav_notification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="4dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/notifikasi"
+                android:contentDescription="Notifikasi" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notifikasi"
+                android:textSize="12sp"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <!-- Profil -->
         <LinearLayout
             android:id="@+id/nav_profile"
             android:layout_width="0dp"
@@ -264,7 +290,6 @@
                 android:layout_height="24dp"
                 android:src="@drawable/profil"
                 android:contentDescription="Profil" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
