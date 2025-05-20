@@ -7,7 +7,7 @@
     android:background="@drawable/aquarium"
     android:padding="16dp">
 
-    <!-- Tombol back putih -->
+    <!-- Tombol back -->
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="36dp"
@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:contentDescription="Kembali"
-        app:tint="#FFFFFF"/>
+        app:tint="#FFFFFF" />
 
     <!-- Judul -->
     <TextView
@@ -34,16 +34,16 @@
     <!-- Foto Profil -->
     <ImageView
         android:id="@+id/fotoProfil"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/foto_profil"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/judul"
         android:layout_marginTop="30dp"
-        android:background="@drawable/bg_circle"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/CircleImage" />
 
-    <!-- Ikon edit di foto -->
+    <!-- Ikon edit -->
     <ImageView
         android:id="@+id/ikonEdit"
         android:layout_width="20dp"
@@ -54,14 +54,15 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp" />
 
-    <!-- Nama -->
+    <!-- Nama Lengkap -->
     <TextView
         android:id="@+id/labelNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nama"
-        android:textColor="#FFFFFF"
+        android:text="Nama Lengkap"
+        android:textColor="#000000"
         android:textStyle="bold"
+        android:textSize="18sp"
         android:layout_below="@id/fotoProfil"
         android:layout_marginTop="30dp"
         android:layout_marginStart="24dp"
@@ -71,8 +72,9 @@
         android:id="@+id/txtNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Putri Aqila Shaveena"
-        android:textColor="#CCCCCC"
+        android:text="-"
+        android:textColor="#000000"
+        android:textSize="17sp"
         android:layout_below="@id/labelNama"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
@@ -81,20 +83,21 @@
         android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#888888"
+        android:background="#FFFFFF"
         android:layout_below="@id/txtNama"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
 
-    <!-- Email -->
+    <!-- Username -->
     <TextView
         android:id="@+id/labelEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:textColor="#FFFFFF"
+        android:text="Username"
+        android:textColor="#000000"
         android:textStyle="bold"
+        android:textSize="18sp"
         android:layout_below="@id/line1"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
@@ -103,8 +106,9 @@
         android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Putriaqila.shaveena@gmail.com"
-        android:textColor="#CCCCCC"
+        android:text="-"
+        android:textColor="#000000"
+        android:textSize="17sp"
         android:layout_below="@id/labelEmail"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
@@ -113,40 +117,8 @@
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#888888"
+        android:background="#FFFFFF"
         android:layout_below="@id/txtEmail"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp" />
-
-    <!-- Nomor Telepon -->
-    <TextView
-        android:id="@+id/labelTelepon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nomor Telepon"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_below="@id/line2"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp" />
-
-    <TextView
-        android:id="@+id/txtTelepon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="+62 812 3456 7891"
-        android:textColor="#CCCCCC"
-        android:layout_below="@id/labelTelepon"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp" />
-
-    <View
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#888888"
-        android:layout_below="@id/txtTelepon"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp" />
