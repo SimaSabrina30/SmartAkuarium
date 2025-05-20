@@ -33,20 +33,24 @@ public class register extends AppCompatActivity {
             if (namaLengkap.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(register.this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
             } else {
-                // ✅ Ganti ke "UserData" agar sesuai dengan yang dibaca ProfileActivity
-                SharedPreferences sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("namaLengkap", namaLengkap);
-                editor.putString("username", username);
-                editor.putString("password", password);
-                editor.apply();
+                // Ganti ke SharedPreferences 'Akun' agar bisa menyimpan banyak user
+                SharedPreferences akunPref = getSharedPreferences("Akun", Context.MODE_PRIVATE);
 
-                Toast.makeText(register.this, "Registrasi berhasil! Silakan login.", Toast.LENGTH_SHORT).show();
+                if (akunPref.contains(username)) {
+                    Toast.makeText(register.this, "Username sudah digunakan", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Simpan data user (format: namaLengkap:password)
+                    SharedPreferences.Editor editor = akunPref.edit();
+                    editor.putString(username, namaLengkap + ":" + password);
+                    editor.apply();
 
-                // Pindah ke halaman login
-                Intent intent = new Intent(register.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                    Toast.makeText(register.this, "Registrasi berhasil! Silakan login.", Toast.LENGTH_SHORT).show();
+
+                    // Pindah ke halaman login
+                    Intent intent = new Intent(register.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

@@ -49,19 +49,38 @@ public class MainActivity extends AppCompatActivity {
 
         // Login saat tombol Sign In ditekan
         btnSignIn.setOnClickListener(view -> {
-            String user = etUsername.getText().toString().trim();
-            String pass = etPassword.getText().toString().trim();
+            String inputUsername = etUsername.getText().toString().trim();
+            String inputPassword = etPassword.getText().toString().trim();
 
-            SharedPreferences sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-            String savedUser = sharedPref.getString("username", "");
-            String savedPass = sharedPref.getString("password", "");
+            SharedPreferences akunPref = getSharedPreferences("Akun", MODE_PRIVATE);
+            String userData = akunPref.getString(inputUsername, null);
 
-            if (user.equals(savedUser) && pass.equals(savedPass)) {
-                Intent intent = new Intent(MainActivity.this, beranda.class);
-                startActivity(intent);
-                finish();
+            if (userData != null) {
+                String[] parts = userData.split(":");
+                if (parts.length == 2) {
+                    String namaLengkap = parts[0];
+                    String savedPassword = parts[1];
+
+                    if (inputPassword.equals(savedPassword)) {
+                        // Simpan user yang sedang login sekarang
+                        SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
+                        SharedPreferences.Editor sessionEditor = userSession.edit();
+                        sessionEditor.putString("username", inputUsername);
+                        sessionEditor.putString("namaLengkap", namaLengkap);
+                        sessionEditor.apply();
+
+                        // Lanjut ke beranda
+                        Intent intent = new Intent(MainActivity.this, beranda.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Password salah", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Data pengguna rusak", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(MainActivity.this, "Username atau Password salah", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -77,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-                Intent intent = new Intent(MainActivity.this, register.class); // Ganti jika class register kamu punya nama berbeda
+                Intent intent = new Intent(MainActivity.this, register.class);
                 startActivity(intent);
             }
         };
