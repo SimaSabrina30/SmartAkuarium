@@ -33,8 +33,8 @@ public class register extends AppCompatActivity {
             if (namaLengkap.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(register.this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
             } else {
-                // Simpan data ke SharedPreferences (pakai nama yang sama seperti di MainActivity)
-                SharedPreferences sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                // ✅ Ganti ke "UserData" agar sesuai dengan yang dibaca ProfileActivity
+                SharedPreferences sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("namaLengkap", namaLengkap);
                 editor.putString("username", username);

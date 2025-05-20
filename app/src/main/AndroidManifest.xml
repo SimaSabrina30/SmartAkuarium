@@ -12,36 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartAkuarium"
         tools:targetApi="31">
+
+        <!-- Aktivitas untuk profil -->
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
-        <!-- Aktivitas utama -->
+
+        <!-- Aktivitas utama (halaman login atau home) -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Beranda -->
+        </activity>
+
+        <!-- Aktivitas untuk halaman lainnya -->
+        <activity android:name=".beranda" android:exported="false" />
+        <activity android:name=".detailakuarium" android:exported="false" />
+        <activity android:name=".daftarikan" android:exported="false" />
+        <activity android:name=".jadwalmakanikan" android:exported="false" />
+        <activity android:name=".jadwalperawatanikan" android:exported="false" />
+        <activity android:name=".atursuhu" android:exported="false" />
+
+        <!-- ✅ Tambahkan ini untuk halaman Sign Up -->
         <activity
-            android:name=".beranda"
-            android:exported="false" /> <!-- Halaman detail akuarium -->
-        <activity
-            android:name=".detailakuarium"
-            android:exported="false" /> <!-- Halaman daftar ikan -->
-        <activity
-            android:name=".daftarikan"
-            android:exported="false" /> <!-- Jadwal makan dan perawatan -->
-        <activity
-            android:name=".jadwalmakanikan"
-            android:exported="false" />
-        <activity
-            android:name=".jadwalperawatanikan"
-            android:exported="false" /> <!-- Pengaturan suhu -->
-        <activity
-            android:name=".atursuhu"
+            android:name=".register"
             android:exported="false" />
     </application>
 
