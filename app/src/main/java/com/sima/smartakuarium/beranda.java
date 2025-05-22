@@ -1,11 +1,12 @@
 package com.sima.smartakuarium;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import androidx.cardview.widget.CardView;
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class beranda extends AppCompatActivity {
 
@@ -13,6 +14,13 @@ public class beranda extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beranda);
+
+        // Periksa status login dari Intent
+        boolean isLoginSuccessful = getIntent().getBooleanExtra("isLoginSuccessful", false);
+        if (isLoginSuccessful) {
+            // Tampilkan dialog jika login sukses
+            showSuccessDialog();
+        }
 
         // Navigasi ke Jadwal Makan Ikan
         CardView cardJadwalMakan = findViewById(R.id.cardJadwalMakanIkan);
@@ -55,11 +63,25 @@ public class beranda extends AppCompatActivity {
             // Sudah di halaman ini, tidak melakukan apa-apa
         });
 
-        // Tombol Notifikasi (ditambahkan)
+        // Tombol Notifikasi
         LinearLayout navNotification = findViewById(R.id.nav_notification);
         navNotification.setOnClickListener(v -> {
             Intent intent = new Intent(beranda.this, notifikasi.class);
             startActivity(intent);
         });
+    }
+
+    private void showSuccessDialog() {
+        // Buat dialog baru
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.sukses_login);
+        dialog.setCancelable(false); // Dialog tidak bisa ditutup dengan tombol back
+
+        // Tombol Tutup
+        Button btnClose = dialog.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(view -> dialog.dismiss());
+
+        // Tampilkan dialog
+        dialog.show();
     }
 }

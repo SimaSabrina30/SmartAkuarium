@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -65,30 +68,22 @@ public class ProfileActivity extends AppCompatActivity {
             fotoProfil.setImageURI(uri);
         }
 
-        // Saat foto diklik, minta izin jika belum, lalu buka galeri
-        fotoProfil.setOnClickListener(v -> {
-            if (checkStoragePermission()) {
-                openGallery();
-            } else {
-                requestPermissionLauncher.launch(getRequiredPermission());
-            }
-        });
+        // Saat foto diklik, minta izin jika perlu, lalu buka galeri
+        fotoProfil.setOnClickListener(v -> handlePhotoSelection());
 
         // Kembali ke beranda
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, beranda.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
-        });
+        btnBack.setOnClickListener(v -> navigateToHome());
 
-        // Logout
-        btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        });
+        // Logout dengan dialog kustom
+        btnLogout.setOnClickListener(v -> handleLogout());
+    }
+
+    private void handlePhotoSelection() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || checkStoragePermission()) {
+            openGallery();
+        } else {
+            requestPermissionLauncher.launch(getRequiredPermission());
+        }
     }
 
     // Fungsi membuka galeri
@@ -96,6 +91,52 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*"); // hanya tampilkan gambar
         startActivityForResult(intent, REQUEST_PICK_IMAGE);
+    }
+
+    // Fungsi logout dengan dialog
+    private void handleLogout() {
+        // Hapus session login
+        SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userSession.edit();
+        editor.clear();
+        editor.apply();
+
+        // Tampilkan dialog logout sukses
+        showLogoutSuccessDialog();
+    }
+
+    private void showLogoutSuccessDialog() {
+        // Inflate layout kustom untuk dialog
+        View view = LayoutInflater.from(this).inflate(R.layout.sukses_logout, null);
+
+        // Referensi elemen dalam layout dialog
+        Button btnClose = view.findViewById(R.id.btnClose);
+
+        // Buat dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+
+        AlertDialog dialog = builder.create();
+
+        // Set tombol tutup
+        btnClose.setOnClickListener(v -> {
+            dialog.dismiss();
+
+            // Pindah ke halaman login setelah dialog ditutup
+            Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        });
+
+        dialog.show();
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(ProfileActivity.this, beranda.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
     // Fungsi mengecek izin

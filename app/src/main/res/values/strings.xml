@@ -11,6 +11,7 @@
         <item>Setiap bulan</item>
     </string-array>
 
+    <!-- Opsi perawatan untuk Spinner -->
     <string-array name="perawatan_options">
         <item>Ganti air</item>
         <item>Bersihkan filter</item>
@@ -19,4 +20,7 @@
         <item>Lainnya</item>
     </string-array>
 
+    <!-- Teks Deskripsi Tombol -->
+    <string name="desc_btn_back">Kembali</string>
+    <string name="title_riwayat_notifikasi">Riwayat Notifikasi</string>
 </resources>

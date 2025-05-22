@@ -2,23 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- ✅ Izin Notifikasi untuk API 33+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartAkuarium"
         tools:targetApi="31">
 
-        <!-- Aktivitas untuk profil -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-
-        <!-- Aktivitas utama (halaman login atau home) -->
+        <!-- Aktivitas utama -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -28,18 +28,25 @@
             </intent-filter>
         </activity>
 
-        <!-- Aktivitas untuk halaman lainnya -->
+        <!-- Aktivitas Profil -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <!-- Halaman lainnya -->
         <activity android:name=".beranda" android:exported="false" />
         <activity android:name=".detailakuarium" android:exported="false" />
         <activity android:name=".daftarikan" android:exported="false" />
         <activity android:name=".jadwalmakanikan" android:exported="false" />
         <activity android:name=".jadwalperawatanikan" android:exported="false" />
         <activity android:name=".atursuhu" android:exported="false" />
+        <activity android:name=".register" android:exported="false" />
 
-        <!-- ✅ Tambahkan ini untuk halaman Sign Up -->
-        <activity
-            android:name=".register"
-            android:exported="false" />
+        <!-- ✅ Tambahkan Receiver untuk Alarm -->
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="true" />
+
     </application>
 
 </manifest>

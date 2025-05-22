@@ -1,5 +1,6 @@
 package com.sima.smartakuarium;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,62 +35,91 @@ public class MainActivity extends AppCompatActivity {
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
         tvSignUpPrompt = findViewById(R.id.tvSignUpPrompt);
 
+        // Periksa notifikasi logout
+        checkLogoutNotification();
+
         // Toggle show/hide password
-        ivTogglePassword.setOnClickListener(v -> {
-            if (isPasswordVisible) {
-                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                ivTogglePassword.setImageResource(R.drawable.ic_eye_off);
-            } else {
-                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                ivTogglePassword.setImageResource(R.drawable.ic_eye);
-            }
-            etPassword.setSelection(etPassword.getText().length());
-            isPasswordVisible = !isPasswordVisible;
-        });
+        ivTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
 
         // Login saat tombol Sign In ditekan
-        btnSignIn.setOnClickListener(view -> {
-            String inputUsername = etUsername.getText().toString().trim();
-            String inputPassword = etPassword.getText().toString().trim();
-
-            SharedPreferences akunPref = getSharedPreferences("Akun", MODE_PRIVATE);
-            String userData = akunPref.getString(inputUsername, null);
-
-            if (userData != null) {
-                String[] parts = userData.split(":");
-                if (parts.length == 2) {
-                    String namaLengkap = parts[0];
-                    String savedPassword = parts[1];
-
-                    if (inputPassword.equals(savedPassword)) {
-                        // Simpan user yang sedang login sekarang
-                        SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
-                        SharedPreferences.Editor sessionEditor = userSession.edit();
-                        sessionEditor.putString("username", inputUsername);
-                        sessionEditor.putString("namaLengkap", namaLengkap);
-                        sessionEditor.apply();
-
-                        // Lanjut ke beranda
-                        Intent intent = new Intent(MainActivity.this, beranda.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(MainActivity.this, "Password salah", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Data pengguna rusak", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(MainActivity.this, "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Teks lupa password
-        tvForgotPassword.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this, "Fitur lupa password belum tersedia", Toast.LENGTH_SHORT).show();
-        });
+        btnSignIn.setOnClickListener(view -> handleLogin());
 
         // Teks klikable "Sign Up"
+        setSignUpClickableText();
+
+        // Teks lupa password
+        tvForgotPassword.setOnClickListener(v ->
+                Toast.makeText(MainActivity.this, "Fitur lupa password belum tersedia", Toast.LENGTH_SHORT).show()
+        );
+    }
+
+    private void checkLogoutNotification() {
+        // Periksa apakah logout berhasil
+        boolean logoutSuccess = getIntent().getBooleanExtra("logout_success", false);
+        if (logoutSuccess) {
+            // Tampilkan dialog sukses logout
+            showSuccessDialog();
+        }
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            ivTogglePassword.setImageResource(R.drawable.ic_eye_off);
+        } else {
+            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            ivTogglePassword.setImageResource(R.drawable.ic_eye);
+        }
+        etPassword.setSelection(etPassword.getText().length());
+        isPasswordVisible = !isPasswordVisible;
+    }
+
+    private void handleLogin() {
+        String inputUsername = etUsername.getText().toString().trim();
+        String inputPassword = etPassword.getText().toString().trim();
+
+        if (inputUsername.isEmpty() || inputPassword.isEmpty()) {
+            Toast.makeText(this, "Username atau password tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SharedPreferences akunPref = getSharedPreferences("Akun", MODE_PRIVATE);
+        String userData = akunPref.getString(inputUsername, null);
+
+        if (userData != null) {
+            String[] parts = userData.split(":");
+            if (parts.length == 2) {
+                String namaLengkap = parts[0];
+                String savedPassword = parts[1];
+
+                if (inputPassword.equals(savedPassword)) {
+                    saveUserSession(inputUsername, namaLengkap);
+
+                    // Lanjut ke beranda
+                    Intent intent = new Intent(MainActivity.this, beranda.class);
+                    intent.putExtra("isLoginSuccessful", true);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Password salah", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Data pengguna rusak", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveUserSession(String username, String namaLengkap) {
+        SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = userSession.edit();
+        sessionEditor.putString("username", username);
+        sessionEditor.putString("namaLengkap", namaLengkap);
+        sessionEditor.apply();
+    }
+
+    private void setSignUpClickableText() {
         String text = "Don't Have An Account? Sign Up";
         SpannableString spannableString = new SpannableString(text);
 
@@ -107,5 +137,19 @@ public class MainActivity extends AppCompatActivity {
 
         tvSignUpPrompt.setText(spannableString);
         tvSignUpPrompt.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void showSuccessDialog() {
+        // Buat dialog baru
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.sukses_logout);
+        dialog.setCancelable(false); // Dialog tidak bisa ditutup dengan tombol back
+
+        // Tombol Tutup
+        Button btnClose = dialog.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(view -> dialog.dismiss());
+
+        // Tampilkan dialog
+        dialog.show();
     }
 }

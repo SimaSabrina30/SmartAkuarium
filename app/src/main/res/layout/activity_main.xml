@@ -1,4 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentTop="true">
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal">
 
         <!-- Judul -->
         <TextView
@@ -23,7 +26,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"/>
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/tvSubTitle"
@@ -33,7 +36,7 @@
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp" />
+            android:layout_marginBottom="24dp" />
 
         <!-- Username Field -->
         <LinearLayout
@@ -41,7 +44,7 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="12dp">
 
@@ -69,7 +72,7 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="@drawable/input_bg"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="12dp">
 
@@ -111,7 +114,18 @@
             android:textColor="#133568"
             android:textSize="14sp"
             android:layout_gravity="end"
-            android:layout_marginTop="8dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Prompt Sign Up -->
+        <TextView
+            android:id="@+id/tvSignUpPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign Up"
+            android:textColor="#133568"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
     </LinearLayout>
 
     <!-- Tombol Sign In -->
@@ -120,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="450dp"
+        android:layout_marginBottom="168dp"
         android:background="@drawable/btn_gradientbutton"
         android:text="Sign In"
         android:textColor="#FFFFFF"
