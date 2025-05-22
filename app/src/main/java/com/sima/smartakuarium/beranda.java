@@ -15,13 +15,6 @@ public class beranda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beranda);
 
-        // Periksa status login dari Intent
-        boolean isLoginSuccessful = getIntent().getBooleanExtra("isLoginSuccessful", false);
-        if (isLoginSuccessful) {
-            // Tampilkan dialog jika login sukses
-            showSuccessDialog();
-        }
-
         // Navigasi ke Jadwal Makan Ikan
         CardView cardJadwalMakan = findViewById(R.id.cardJadwalMakanIkan);
         cardJadwalMakan.setOnClickListener(v -> {
@@ -71,17 +64,4 @@ public class beranda extends AppCompatActivity {
         });
     }
 
-    private void showSuccessDialog() {
-        // Buat dialog baru
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.sukses_login);
-        dialog.setCancelable(false); // Dialog tidak bisa ditutup dengan tombol back
-
-        // Tombol Tutup
-        Button btnClose = dialog.findViewById(R.id.btnClose);
-        btnClose.setOnClickListener(view -> dialog.dismiss());
-
-        // Tampilkan dialog
-        dialog.show();
-    }
 }

@@ -11,8 +11,13 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,10 +52,8 @@ public class MainActivity extends AppCompatActivity {
         // Teks klikable "Sign Up"
         setSignUpClickableText();
 
-        // Teks lupa password
-        tvForgotPassword.setOnClickListener(v ->
-                Toast.makeText(MainActivity.this, "Fitur lupa password belum tersedia", Toast.LENGTH_SHORT).show()
-        );
+        // Teks lupa password, panggil method onForgotPasswordClick saat diklik
+        tvForgotPassword.setOnClickListener(this::onForgotPasswordClick);
     }
 
     private void checkLogoutNotification() {
@@ -75,41 +78,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        String inputUsername = etUsername.getText().toString().trim();
+        String inputEmail = etUsername.getText().toString().trim(); // Username = Email
         String inputPassword = etPassword.getText().toString().trim();
 
-        if (inputUsername.isEmpty() || inputPassword.isEmpty()) {
-            Toast.makeText(this, "Username atau password tidak boleh kosong", Toast.LENGTH_SHORT).show();
+        if (inputEmail.isEmpty() || inputPassword.isEmpty()) {
+            Toast.makeText(this, "Email atau password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences akunPref = getSharedPreferences("Akun", MODE_PRIVATE);
-        String userData = akunPref.getString(inputUsername, null);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        if (userData != null) {
-            String[] parts = userData.split(":");
-            if (parts.length == 2) {
-                String namaLengkap = parts[0];
-                String savedPassword = parts[1];
+        mAuth.signInWithEmailAndPassword(inputEmail, inputPassword)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            // Ambil nama lengkap dari Firestore
+                            FirebaseFirestore.getInstance()
+                                    .collection("pengguna")
+                                    .document(inputEmail)
+                                    .get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        String namaLengkap = documentSnapshot.getString("namaLengkap");
+                                        saveUserSession(inputEmail, namaLengkap != null ? namaLengkap : "");
 
-                if (inputPassword.equals(savedPassword)) {
-                    saveUserSession(inputUsername, namaLengkap);
-
-                    // Lanjut ke beranda
-                    Intent intent = new Intent(MainActivity.this, beranda.class);
-                    intent.putExtra("isLoginSuccessful", true);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(this, "Password salah", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Data pengguna rusak", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Username tidak ditemukan", Toast.LENGTH_SHORT).show();
-        }
+                                        Intent intent = new Intent(MainActivity.this, beranda.class);
+                                        intent.putExtra("isLoginSuccessful", true);
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(MainActivity.this, "Gagal ambil data profil", Toast.LENGTH_SHORT).show();
+                                    });
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Login gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 
     private void saveUserSession(String username, String namaLengkap) {
         SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
@@ -140,16 +147,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSuccessDialog() {
-        // Buat dialog baru
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.sukses_logout);
-        dialog.setCancelable(false); // Dialog tidak bisa ditutup dengan tombol back
+        Toast.makeText(this, "Logout berhasil!", Toast.LENGTH_SHORT).show();
+    }
 
-        // Tombol Tutup
-        Button btnClose = dialog.findViewById(R.id.btnClose);
-        btnClose.setOnClickListener(view -> dialog.dismiss());
-
-        // Tampilkan dialog
-        dialog.show();
+    // Method untuk menangani klik lupa password
+    public void onForgotPasswordClick(View view) {
+        Intent intent = new Intent(MainActivity.this, ForgotPassword.class);
+        startActivity(intent);
     }
 }

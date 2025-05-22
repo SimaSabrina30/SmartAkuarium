@@ -1,8 +1,6 @@
 package com.sima.smartakuarium;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,10 +8,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class register extends AppCompatActivity {
 
     EditText etNamaLengkap, etUsername, etPassword;
     Button btnDaftar;
+
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,33 +31,47 @@ public class register extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnDaftar = findViewById(R.id.btnDaftar);
 
+        db = FirebaseFirestore.getInstance();
+
         btnDaftar.setOnClickListener(view -> {
             String namaLengkap = etNamaLengkap.getText().toString().trim();
-            String username = etUsername.getText().toString().trim();
+            String email = etUsername.getText().toString().trim(); // username = email
             String password = etPassword.getText().toString().trim();
 
-            if (namaLengkap.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            if (namaLengkap.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(register.this, "Semua field harus diisi", Toast.LENGTH_SHORT).show();
-            } else {
-                // Ganti ke SharedPreferences 'Akun' agar bisa menyimpan banyak user
-                SharedPreferences akunPref = getSharedPreferences("Akun", Context.MODE_PRIVATE);
-
-                if (akunPref.contains(username)) {
-                    Toast.makeText(register.this, "Username sudah digunakan", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Simpan data user (format: namaLengkap:password)
-                    SharedPreferences.Editor editor = akunPref.edit();
-                    editor.putString(username, namaLengkap + ":" + password);
-                    editor.apply();
-
-                    Toast.makeText(register.this, "Registrasi berhasil! Silakan login.", Toast.LENGTH_SHORT).show();
-
-                    // Pindah ke halaman login
-                    Intent intent = new Intent(register.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                return;
             }
+
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+            // Buat akun di Firebase Authentication
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Jika berhasil buat akun, simpan info ke Firestore juga
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("namaLengkap", namaLengkap);
+                            user.put("username", email); // Email disimpan sebagai username
+
+                            db.collection("pengguna")
+                                    .document(email)
+                                    .set(user)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(register.this, "Registrasi berhasil!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(register.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(register.this, "Gagal menyimpan ke Firestore", Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            // Jika gagal buat akun (misalnya email sudah digunakan)
+                            Toast.makeText(register.this, "Registrasi gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
+
     }
 }

@@ -114,7 +114,10 @@
             android:textColor="#133568"
             android:textSize="14sp"
             android:layout_gravity="end"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onForgotPasswordClick" />
 
         <!-- Prompt Sign Up -->
         <TextView

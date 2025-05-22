@@ -28,6 +28,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Aktivitas Forgot Password -->
+        <activity
+            android:name=".ForgotPassword"
+            android:exported="false" />
+
         <!-- Aktivitas Profil -->
         <activity
             android:name=".ProfileActivity"
