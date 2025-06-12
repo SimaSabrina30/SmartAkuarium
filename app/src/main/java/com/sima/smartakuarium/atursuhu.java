@@ -1,6 +1,11 @@
 package com.sima.smartakuarium;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,15 +15,20 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class atursuhu extends AppCompatActivity {
 
-    private TextView currentTemperatureText;
+    private TextView currentTemperatureText, savedSettingsText;
     private EditText targetTempInput, minTempInput, maxTempInput;
     private Button saveButton;
+
+    private static final String CHANNEL_ID = "suhu_channel";
+    private static final int NOTIFICATION_ID = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,102 +36,110 @@ public class atursuhu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_atursuhu);
 
-        // Menangani window insets untuk edge-to-edge UI
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Inisialisasi View
+        // Init
         currentTemperatureText = findViewById(R.id.currentTemperatureText);
+        savedSettingsText = findViewById(R.id.savedSettingsText);
         targetTempInput = findViewById(R.id.targetTempInput);
         minTempInput = findViewById(R.id.minTempInput);
         maxTempInput = findViewById(R.id.maxTempInput);
         saveButton = findViewById(R.id.saveButton);
-
-        // Tombol kembali
         ImageButton backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> {
-            finish(); // Menutup aktivitas dan kembali ke halaman sebelumnya
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); // (opsional) animasi transisi
-        });
 
-        // Set suhu saat ini (dummy - nanti bisa dari sensor/Bluetooth/Internet)
-        currentTemperatureText.setText("Suhu Saat Ini: 28°C");
+        backButton.setOnClickListener(v -> finish());
 
-        // Mengambil pengaturan suhu dari SharedPreferences dan menampilkannya
+        createNotificationChannel();
+        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Dummy
+
         loadTemperatureSettings();
 
-        // Tombol Simpan ditekan
         saveButton.setOnClickListener(v -> {
-            String targetTempStr = targetTempInput.getText().toString().trim();
-            String minTempStr = minTempInput.getText().toString().trim();
-            String maxTempStr = maxTempInput.getText().toString().trim();
+            String target = targetTempInput.getText().toString().trim();
+            String min = minTempInput.getText().toString().trim();
+            String max = maxTempInput.getText().toString().trim();
 
-            if (targetTempStr.isEmpty()) {
+            if (target.isEmpty()) {
                 Toast.makeText(this, "Masukkan suhu target!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Validasi angka (jika diisi)
-            double targetTemp = Double.parseDouble(targetTempStr);
-            double minTemp = minTempStr.isEmpty() ? 0 : Double.parseDouble(minTempStr);
-            double maxTemp = maxTempStr.isEmpty() ? 0 : Double.parseDouble(maxTempStr);
+            double t = Double.parseDouble(target);
+            double tMin = min.isEmpty() ? 0 : Double.parseDouble(min);
+            double tMax = max.isEmpty() ? 0 : Double.parseDouble(max);
 
-            if (!minTempStr.isEmpty() && targetTemp < minTemp) {
-                Toast.makeText(this, "Suhu target tidak boleh lebih kecil dari suhu minimum!", Toast.LENGTH_SHORT).show();
-                return;
+            if (!min.isEmpty() && t < tMin) {
+                Toast.makeText(this, "Target < Min!", Toast.LENGTH_SHORT).show(); return;
+            }
+            if (!max.isEmpty() && t > tMax) {
+                Toast.makeText(this, "Target > Max!", Toast.LENGTH_SHORT).show(); return;
             }
 
-            if (!maxTempStr.isEmpty() && targetTemp > maxTemp) {
-                Toast.makeText(this, "Suhu target tidak boleh lebih besar dari suhu maksimum!", Toast.LENGTH_SHORT).show();
-                return;
+            SharedPreferences prefs = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("targetTemp", target);
+            editor.putString("minTemp", min);
+            editor.putString("maxTemp", max);
+            editor.apply();
+
+            String message = "Suhu target: " + target + "°C";
+            if (!min.isEmpty() && !max.isEmpty()) {
+                message += "\nMin: " + min + "°C, Max: " + max + "°C";
             }
 
-            // Simpan data ke SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Toast.makeText(this, "Pengaturan disimpan!", Toast.LENGTH_SHORT).show();
+            savedSettingsText.setText(message);
+            showTemperatureNotification(message);
 
-            editor.putString("targetTemp", targetTempStr);
-            editor.putString("minTemp", minTempStr);
-            editor.putString("maxTemp", maxTempStr);
-            editor.apply(); // Simpan data
-
-            // Menampilkan pesan sukses
-            String message = "Suhu target: " + targetTempStr + "°C";
-            if (!minTempStr.isEmpty() && !maxTempStr.isEmpty()) {
-                message += "\nBatas Min: " + minTempStr + "°C, Maks: " + maxTempStr + "°C";
-            }
-
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-
-            // Kosongkan input setelah simpan
-            targetTempInput.setText("");
-            minTempInput.setText("");
-            maxTempInput.setText("");
+            targetTempInput.setText(""); minTempInput.setText(""); maxTempInput.setText("");
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Mengambil pengaturan suhu dari SharedPreferences saat halaman dibuka
-        loadTemperatureSettings();
+    private void loadTemperatureSettings() {
+        SharedPreferences prefs = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
+        String target = prefs.getString("targetTemp", "");
+        String min = prefs.getString("minTemp", "");
+        String max = prefs.getString("maxTemp", "");
+
+        targetTempInput.setText(target);
+        minTempInput.setText(min);
+        maxTempInput.setText(max);
+
+        if (!target.isEmpty()) {
+            String message = "Suhu target: " + target + "°C";
+            if (!min.isEmpty() && !max.isEmpty()) {
+                message += "\nMin: " + min + "°C, Max: " + max + "°C";
+            }
+            savedSettingsText.setText(message);
+        }
     }
 
-    private void loadTemperatureSettings() {
-        SharedPreferences sharedPreferences = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Notifikasi Suhu", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("Channel untuk notifikasi pengaturan suhu");
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
 
-        // Mengambil data dari SharedPreferences
-        String targetTemp = sharedPreferences.getString("targetTemp", "28"); // Default ke 28°C jika tidak ada data
-        String minTemp = sharedPreferences.getString("minTemp", "0");
-        String maxTemp = sharedPreferences.getString("maxTemp", "0");
+    private void showTemperatureNotification(String message) {
+        Intent intent = new Intent(this, atursuhu.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        // Menampilkan data pada UI
-        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Bisa diganti dengan data aktual
-        targetTempInput.setText(targetTemp);
-        minTempInput.setText(minTemp);
-        maxTempInput.setText(maxTemp);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_temperatur)
+                .setContentTitle("Pengaturan Suhu Tersimpan")
+                .setContentText(message)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build());
     }
 }
