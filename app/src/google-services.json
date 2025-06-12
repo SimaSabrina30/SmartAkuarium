@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "355888669295",
+    "firebase_url": "https://smartakuarium-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smartakuarium",
+    "storage_bucket": "smartakuarium.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355888669295:android:669d8ee64fe124922b639a",
+        "android_client_info": {
+          "package_name": "com.sima.smartakuarium"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcB96HFUBa16_CPRHyTBy0Fb8k_T1F-Qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
