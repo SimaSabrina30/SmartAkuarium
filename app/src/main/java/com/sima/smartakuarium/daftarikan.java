@@ -20,10 +20,8 @@ public class daftarikan extends AppCompatActivity {
 
         // Tombol Detail Ikan
         Button btnDetail1 = findViewById(R.id.btnDetail1);
-        Button btnDetail2 = findViewById(R.id.btnDetail2);
 
         btnDetail1.setOnClickListener(v -> openDetail());
-        btnDetail2.setOnClickListener(v -> openDetail());
 
         // Manual Bottom Navigation
         LinearLayout navHome = findViewById(R.id.nav_home);
