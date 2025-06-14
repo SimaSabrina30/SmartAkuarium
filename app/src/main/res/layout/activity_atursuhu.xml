@@ -119,6 +119,19 @@
                 android:textColor="#FFFFFF"
                 android:background="@drawable/btn_gradientbutton"
                 android:layout_marginTop="32dp" />
+
+            <!-- Tampilan Pengaturan yang Disimpan -->
+            <TextView
+                android:id="@+id/savedSettingsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pengaturan suhu terakhir akan tampil di sini."
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_marginTop="24dp"
+                android:background="@android:color/transparent"
+                android:padding="8dp" />
         </LinearLayout>
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

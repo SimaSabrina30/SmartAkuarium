@@ -5,19 +5,18 @@
 
     <!-- Opsi pengulangan untuk Spinner -->
     <string-array name="repeat_options">
-        <item>Hanya sekali</item>
-        <item>Setiap hari</item>
-        <item>Setiap minggu</item>
-        <item>Setiap bulan</item>
+        <item>Harian</item>
+        <item>Mingguan</item>
+        <item>Tidak Diulang</item>
     </string-array>
 
     <!-- Opsi perawatan untuk Spinner -->
     <string-array name="perawatan_options">
-        <item>Ganti air</item>
-        <item>Bersihkan filter</item>
-        <item>Tambah vitamin</item>
-        <item>Cek suhu</item>
-        <item>Lainnya</item>
+        <item>Ganti Air</item>
+        <item>Bersihkan Filter</item>
+        <item>Pemberian Obat</item>
+        <item>Pemeriksaan Suhu</item>
+        <item>Lainnya</item> <!-- opsional jika ingin tetap ada -->
     </string-array>
 
     <!-- Teks Deskripsi Tombol -->

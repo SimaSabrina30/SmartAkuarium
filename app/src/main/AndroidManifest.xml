@@ -2,10 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ✅ Izin Notifikasi untuk API 33+ -->
+    <!-- Izin untuk menampilkan notifikasi (wajib di Android 13 / API 33+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
+    <!-- Izin untuk menggunakan alarm dan mencegah perangkat tidur -->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Izin untuk menjadwalkan alarm akurat (API 31+) -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -28,17 +33,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Aktivitas Forgot Password -->
-        <activity
-            android:name=".ForgotPassword"
-            android:exported="false" />
-
-        <!-- Aktivitas Profil -->
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-
-        <!-- Halaman lainnya -->
+        <!-- Aktivitas tambahan -->
+        <activity android:name=".ForgotPassword" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
         <activity android:name=".beranda" android:exported="false" />
         <activity android:name=".detailakuarium" android:exported="false" />
         <activity android:name=".daftarikan" android:exported="false" />
@@ -47,10 +44,13 @@
         <activity android:name=".atursuhu" android:exported="false" />
         <activity android:name=".register" android:exported="false" />
 
-        <!-- ✅ Tambahkan Receiver untuk Alarm -->
+        <!-- Receiver alarm dan notifikasi -->
         <receiver
             android:name=".AlarmReceiver"
             android:exported="true" />
+        <receiver
+            android:name=".TemperatureNotificationReceiver"
+            android:exported="false" />
 
     </application>
 
