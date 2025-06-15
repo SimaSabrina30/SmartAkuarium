@@ -24,7 +24,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class atursuhu extends AppCompatActivity {
 
     private TextView currentTemperatureText, savedSettingsText;
-    private EditText targetTempInput, minTempInput, maxTempInput;
+    private EditText targetTempInput, minTempInput, maxTempInput, minTdsInput, maxTdsInput; // Added TDS inputs
     private Button saveButton;
 
     private static final String CHANNEL_ID = "suhu_channel";
@@ -43,28 +43,34 @@ public class atursuhu extends AppCompatActivity {
         });
 
         // Init
-        currentTemperatureText = findViewById(R.id.currentTemperatureText);
-        savedSettingsText = findViewById(R.id.savedSettingsText);
-        targetTempInput = findViewById(R.id.targetTempInput);
+        // Corrected initializations based on typical UI structure and your XML
+        // Assuming minTempInput is also used as the target temperature input based on your XML
         minTempInput = findViewById(R.id.minTempInput);
         maxTempInput = findViewById(R.id.maxTempInput);
+        minTdsInput = findViewById(R.id.minTdsInput); // Initialize TDS input
+        maxTdsInput = findViewById(R.id.maxTdsInput); // Initialize TDS input
+
+        currentTemperatureText = findViewById(R.id.titleText); // Re-purposing titleText as a dummy for current temp or remove if not needed
+        savedSettingsText = findViewById(R.id.savedSettingsText);
         saveButton = findViewById(R.id.saveButton);
         ImageButton backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(v -> finish());
 
         createNotificationChannel();
-        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Dummy
+        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Dummy data for current temperature
 
         loadTemperatureSettings();
 
         saveButton.setOnClickListener(v -> {
-            String target = targetTempInput.getText().toString().trim();
+            String target = minTempInput.getText().toString().trim(); // Using minTempInput as target based on XML
             String min = minTempInput.getText().toString().trim();
             String max = maxTempInput.getText().toString().trim();
+            String minTds = minTdsInput.getText().toString().trim(); // Get TDS min
+            String maxTds = maxTdsInput.getText().toString().trim(); // Get TDS max
 
             if (target.isEmpty()) {
-                Toast.makeText(this, "Masukkan suhu target!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Masukkan suhu minimum!", Toast.LENGTH_SHORT).show(); // Changed message
                 return;
             }
 
@@ -72,47 +78,76 @@ public class atursuhu extends AppCompatActivity {
             double tMin = min.isEmpty() ? 0 : Double.parseDouble(min);
             double tMax = max.isEmpty() ? 0 : Double.parseDouble(max);
 
-            if (!min.isEmpty() && t < tMin) {
-                Toast.makeText(this, "Target < Min!", Toast.LENGTH_SHORT).show(); return;
+            if (!min.isEmpty() && !max.isEmpty() && tMin >= tMax) { // Added a check for minTemp >= maxTemp
+                Toast.makeText(this, "Suhu minimum harus lebih kecil dari suhu maksimum!", Toast.LENGTH_SHORT).show();
+                return;
             }
-            if (!max.isEmpty() && t > tMax) {
-                Toast.makeText(this, "Target > Max!", Toast.LENGTH_SHORT).show(); return;
+
+            if (!minTds.isEmpty() && !maxTds.isEmpty()) {
+                double tdsMin = Double.parseDouble(minTds);
+                double tdsMax = Double.parseDouble(maxTds);
+                if (tdsMin >= tdsMax) {
+                    Toast.makeText(this, "TDS minimum harus lebih kecil dari TDS maksimum!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+
 
             SharedPreferences prefs = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("targetTemp", target);
-            editor.putString("minTemp", min);
+            editor.putString("minTemp", min); // Changed to minTemp
             editor.putString("maxTemp", max);
+            editor.putString("minTds", minTds); // Save TDS min
+            editor.putString("maxTds", maxTds); // Save TDS max
             editor.apply();
 
-            String message = "Suhu target: " + target + "°C";
-            if (!min.isEmpty() && !max.isEmpty()) {
-                message += "\nMin: " + min + "°C, Max: " + max + "°C";
+            String message = "Suhu min: " + min + "°C"; // Changed message
+            if (!max.isEmpty()) {
+                message += ", Suhu max: " + max + "°C";
+            }
+            if (!minTds.isEmpty() && !maxTds.isEmpty()) {
+                message += "\nTDS min: " + minTds + " ppm, TDS max: " + maxTds + " ppm";
             }
 
             Toast.makeText(this, "Pengaturan disimpan!", Toast.LENGTH_SHORT).show();
             savedSettingsText.setText(message);
             showTemperatureNotification(message);
 
-            targetTempInput.setText(""); minTempInput.setText(""); maxTempInput.setText("");
+            // Pass data to detailakuarium
+            Intent intent = new Intent(atursuhu.this, detailakuarium.class);
+            intent.putExtra("minTemp", min);
+            intent.putExtra("maxTemp", max);
+            intent.putExtra("minTds", minTds);
+            intent.putExtra("maxTds", maxTds);
+            startActivity(intent);
+
+            // Clear inputs after saving (optional, can be removed if you want them to persist)
+            minTempInput.setText("");
+            maxTempInput.setText("");
+            minTdsInput.setText("");
+            maxTdsInput.setText("");
         });
     }
 
     private void loadTemperatureSettings() {
         SharedPreferences prefs = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
-        String target = prefs.getString("targetTemp", "");
-        String min = prefs.getString("minTemp", "");
+        String min = prefs.getString("minTemp", ""); // Load minTemp
         String max = prefs.getString("maxTemp", "");
+        String minTds = prefs.getString("minTds", ""); // Load minTds
+        String maxTds = prefs.getString("maxTds", ""); // Load maxTds
 
-        targetTempInput.setText(target);
-        minTempInput.setText(min);
+        minTempInput.setText(min); // Set minTemp
         maxTempInput.setText(max);
+        minTdsInput.setText(minTds); // Set minTds
+        maxTdsInput.setText(maxTds); // Set maxTds
 
-        if (!target.isEmpty()) {
-            String message = "Suhu target: " + target + "°C";
-            if (!min.isEmpty() && !max.isEmpty()) {
-                message += "\nMin: " + min + "°C, Max: " + max + "°C";
+        if (!min.isEmpty() || !minTds.isEmpty()) { // Check if any settings exist
+            String message = "Suhu min: " + min + "°C"; // Changed message
+            if (!max.isEmpty()) {
+                message += ", Suhu max: " + max + "°C";
+            }
+            if (!minTds.isEmpty() && !maxTds.isEmpty()) {
+                message += "\nTDS min: " + minTds + " ppm, TDS max: " + maxTds + " ppm";
             }
             savedSettingsText.setText(message);
         }
@@ -133,7 +168,7 @@ public class atursuhu extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_temperatur)
-                .setContentTitle("Pengaturan Suhu Tersimpan")
+                .setContentTitle("Pengaturan Tersimpan") // Changed title
                 .setContentText(message)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
