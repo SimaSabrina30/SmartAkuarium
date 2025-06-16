@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             message = "Saatnya melakukan perawatan: " + jenis;
         } else {
             title = "Pengingat!";
-            message = "Ada pengingat untuk ikanmu.";
+            message = "Waktunya Memberi makan ikan!";
         }
 
         // Simpan ke histori
