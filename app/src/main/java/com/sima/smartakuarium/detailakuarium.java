@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +21,7 @@ import java.util.Locale;
 public class detailakuarium extends AppCompatActivity {
     Button btnRefresh;
     TextView tvJam, tvTanggal, tvTds, tvSuhu, tvStatusTds, tvStatusSuhu;
-    TextView tvIdealSuhu, tvIdealTds; // !!! INI YANG DITAMBAHKAN !!!
+    TextView tvIdealSuhu, tvIdealTds;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference logRef = db.collection("aquarium_logs");
@@ -35,7 +34,6 @@ public class detailakuarium extends AppCompatActivity {
 
         btnRefresh = findViewById(R.id.btnRefresh);
 
-        // Initialize TextViews for monitored data
         tvJam = findViewById(R.id.tvJam);
         tvTanggal = findViewById(R.id.tvTanggal);
         tvTds = findViewById(R.id.tvTds);
@@ -43,18 +41,12 @@ public class detailakuarium extends AppCompatActivity {
         tvStatusTds = findViewById(R.id.tvStatusTds);
         tvStatusSuhu = findViewById(R.id.tvStatusSuhu);
 
-        // !!! INI YANG DITAMBAHKAN: Initialize TextViews for ideal data !!!
         tvIdealSuhu = findViewById(R.id.tvIdealSuhu);
         tvIdealTds = findViewById(R.id.tvIdealTds);
-        // !!! AKHIR DARI PENAMBAHAN !!!
 
-
-        // Set up back button click listener
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
 
-        // Get the latest log data from Firebase
         getLatestLog();
-        // Display the saved ideal settings in the "Air Ideal" section
         displayIdealSettings();
 
         btnRefresh.setOnClickListener(view -> {
@@ -78,18 +70,37 @@ public class detailakuarium extends AppCompatActivity {
 
                         tvJam.setText("Jam: " + jam);
                         tvTanggal.setText("Tanggal: " + tanggal);
-                        tvTds.setText("TDS: " + (tds != null ? String.format(Locale.getDefault(), "%.2f", tds) : "-") + " ppm"); // Format TDS
-                        tvSuhu.setText("Suhu: " + (suhu != null ? String.format(Locale.getDefault(), "%.2f", suhu) : "-") + "°C"); // Format Suhu
+                        tvTds.setText("TDS: " + (tds != null ? String.format(Locale.getDefault(), "%.2f", tds) : "-") + " ppm");
+                        tvSuhu.setText("Suhu: " + (suhu != null ? String.format(Locale.getDefault(), "%.2f", suhu) : "-") + "°C");
 
-                        // Optionally, here you could compare current values with ideal values
-                        // and update tvStatusTds and tvStatusSuhu (e.g., "Normal", "Tinggi", "Rendah")
-                        // For now, these will remain "-" or as set by displayIdealSettings if not cleared here.
-                        tvStatusSuhu.setText("Status Suhu: -"); // Reset status, or implement comparison logic
-                        tvStatusTds.setText("Status TDS: -"); // Reset status, or implement comparison logic
+                        // --- Logic to determine status based on Arduino code ---
+                        String statusSuhu = "-";
+                        if (suhu != null) {
+                            if (suhu < 25) {
+                                statusSuhu = "Rendah";
+                            } else if (suhu <= 30) {
+                                statusSuhu = "Normal";
+                            } else {
+                                statusSuhu = "Tinggi";
+                            }
+                        }
+                        tvStatusSuhu.setText("Status Suhu: " + statusSuhu);
+
+                        String statusTDS = "-";
+                        if (tds != null) {
+                            if (tds < 50) {
+                                statusTDS = "Rendah";
+                            } else if (tds <= 500) {
+                                statusTDS = "Normal";
+                            } else {
+                                statusTDS = "Tinggi";
+                            }
+                        }
+                        tvStatusTds.setText("Status TDS: " + statusTDS);
+                        // --- End of status logic ---
 
                     } else {
                         Toast.makeText(this, "Data tidak ditemukan", Toast.LENGTH_SHORT).show();
-                        // Clear current readings if no data
                         tvJam.setText("Jam: -");
                         tvTanggal.setText("Tanggal: -");
                         tvTds.setText("TDS: -");
@@ -100,7 +111,6 @@ public class detailakuarium extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Gagal mengambil data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    // Clear current readings on failure
                     tvJam.setText("Jam: -");
                     tvTanggal.setText("Tanggal: -");
                     tvTds.setText("TDS: -");
@@ -111,14 +121,12 @@ public class detailakuarium extends AppCompatActivity {
     }
 
     private void displayIdealSettings() {
-        // Load settings from SharedPreferences
         SharedPreferences prefs = getSharedPreferences("AkuariumPrefs", MODE_PRIVATE);
         String minTemp = prefs.getString("minTemp", "");
         String maxTemp = prefs.getString("maxTemp", "");
         String minTds = prefs.getString("minTds", "");
         String maxTds = prefs.getString("maxTds", "");
 
-        // Construct and set text for Ideal Suhu
         StringBuilder suhuIdealBuilder = new StringBuilder("Suhu: ");
         if (!minTemp.isEmpty() && !maxTemp.isEmpty()) {
             suhuIdealBuilder.append(minTemp).append(" - ").append(maxTemp).append("°C");
@@ -131,7 +139,6 @@ public class detailakuarium extends AppCompatActivity {
         }
         tvIdealSuhu.setText(suhuIdealBuilder.toString());
 
-        // Construct and set text for Ideal TDS
         StringBuilder tdsIdealBuilder = new StringBuilder("TDS: ");
         if (!minTds.isEmpty() && !maxTds.isEmpty()) {
             tdsIdealBuilder.append(minTds).append(" - ").append(maxTds).append(" ppm");
