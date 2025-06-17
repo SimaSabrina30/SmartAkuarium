@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
@@ -58,7 +60,7 @@ public class atursuhu extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish());
 
         createNotificationChannel();
-        currentTemperatureText.setText("Suhu Saat Ini: 28°C"); // Dummy data for current temperature
+        currentTemperatureText.setText("Atur Parameter Akuarium"); // Dummy data for current temperature
 
         loadTemperatureSettings();
 
@@ -175,6 +177,16 @@ public class atursuhu extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build());
     }
 }
