@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/aquarium">
 
-    <!-- ScrollView untuk konten utama -->
     <ScrollView
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -21,20 +20,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Judul -->
             <TextView
                 android:id="@+id/titleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Atur Suhu Akuarium"
-                android:textColor="#133568"
+                android:text="Atur Parameter Akuarium" android:textColor="#133568"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Tombol Kembali -->
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="48dp"
@@ -47,40 +43,10 @@
                 android:layout_marginBottom="8dp"
                 app:tint="@android:color/white" />
 
-            <!-- Suhu Saat Ini -->
-            <TextView
-                android:id="@+id/currentTemperatureText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Suhu Saat Ini: --°C"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp" />
-
-            <!-- Input Suhu Target -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suhu Target:"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="16dp" />
-            <EditText
-                android:id="@+id/targetTempInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contoh: 27"
-                android:inputType="numberDecimal"
-                android:textColor="#000000"
-                android:background="@drawable/backgroundputih"
-                android:padding="12dp" />
-
-            <!-- Input Suhu Minimum -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Suhu Minimum:"
+                android:text="Suhu Minimum (°C):"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="16dp" />
             <EditText
@@ -93,11 +59,10 @@
                 android:background="@drawable/backgroundputih"
                 android:padding="12dp" />
 
-            <!-- Input Suhu Maksimum -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suhu Maksimum:"
+                android:text="Suhu Maksimum (°C):"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="16dp" />
             <EditText
@@ -110,7 +75,38 @@
                 android:background="@drawable/backgroundputih"
                 android:padding="12dp" />
 
-            <!-- Tombol Simpan -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TDS Minimum (ppm):"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp" />
+            <EditText
+                android:id="@+id/minTdsInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contoh: 100"
+                android:inputType="numberDecimal"
+                android:textColor="#000000"
+                android:background="@drawable/backgroundputih"
+                android:padding="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TDS Maksimum (ppm):"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp" />
+            <EditText
+                android:id="@+id/maxTdsInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contoh: 300"
+                android:inputType="numberDecimal"
+                android:textColor="#000000"
+                android:background="@drawable/backgroundputih"
+                android:padding="12dp" />
+
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
@@ -120,12 +116,11 @@
                 android:background="@drawable/btn_gradientbutton"
                 android:layout_marginTop="32dp" />
 
-            <!-- Tampilan Pengaturan yang Disimpan -->
             <TextView
                 android:id="@+id/savedSettingsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pengaturan suhu terakhir akan tampil di sini."
+                android:text="Pengaturan terakhir akan tampil di sini."
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_marginTop="24dp"
