@@ -11,34 +11,37 @@
     tools:context=".notifikasi">
 
     <!-- Tombol Kembali -->
+
+    <!-- Header Notifikasi -->
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_marginStart="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/kembali"
         android:contentDescription="@string/desc_btn_back"
-        app:tint="#133568"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginEnd="8dp" />
-
-    <!-- Header Notifikasi -->
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/title_riwayat_notifikasi"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="#133568"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        app:tint="#FFFFFF" />
 
     <!-- RecyclerView untuk daftar notifikasi -->
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="323dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/title_riwayat_notifikasi"
+        android:textColor="#133568"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotifikasi"
         android:layout_width="0dp"

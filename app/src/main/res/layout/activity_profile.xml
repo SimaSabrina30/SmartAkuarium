@@ -7,29 +7,39 @@
     android:background="@drawable/aquarium"
     android:padding="16dp">
 
-    <!-- Tombol back -->
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/baseline_arrow_back_24"
-        android:background="@android:color/transparent"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:contentDescription="Kembali"
-        app:tint="#FFFFFF" />
-
-    <!-- Judul -->
-    <TextView
-        android:id="@+id/judul"
-        android:layout_width="wrap_content"
+    <!-- Header: Back + Judul sejajar -->
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profil Pengguna"
-        android:textColor="#133568"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/btnBack" />
+        android:layout_marginTop="10dp">
+
+        <!-- Tombol back -->
+
+        <!-- Judul -->
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Kembali"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_toEndOf="@id/btnBack"
+            android:text="Profil Pengguna"
+            android:textColor="#133568"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <!-- Foto Profil -->
     <com.google.android.material.imageview.ShapeableImageView
@@ -38,11 +48,10 @@
         android:layout_height="100dp"
         android:src="@drawable/foto_profil"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/judul"
+        android:layout_below="@id/headerLayout"
         android:layout_marginTop="30dp"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/CircleImage" />
-
 
     <!-- Ikon edit -->
     <ImageView
