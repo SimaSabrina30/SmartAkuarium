@@ -133,7 +133,9 @@
                 android:background="@drawable/btn_gradientbutton"
                 android:text="Simpan Pengaturan"
                 android:textColor="#FFFFFF"
-                android:paddingVertical="10dp" />
+                android:paddingVertical="10dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/savedSettingsText"

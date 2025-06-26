@@ -141,5 +141,8 @@
         android:background="@drawable/btn_gradientbutton"
         android:text="Sign In"
         android:textColor="#FFFFFF"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
 </RelativeLayout>
