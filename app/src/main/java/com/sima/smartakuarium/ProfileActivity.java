@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Kembali ke beranda
         btnBack.setOnClickListener(v -> navigateToHome());
 
-        // Logout dengan konfirmasi
+        // Logout dengan dialog kustom
         btnLogout.setOnClickListener(v -> handleLogout());
     }
 
@@ -93,23 +93,16 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_PICK_IMAGE);
     }
 
-    // Fungsi logout dengan konfirmasi dialog
+    // Fungsi logout dengan dialog
     private void handleLogout() {
-        new AlertDialog.Builder(this)
-                .setTitle("Konfirmasi Keluar")
-                .setMessage("Apakah Anda yakin ingin keluar?")
-                .setPositiveButton("Ya", (dialog, which) -> {
-                    // Hapus session login
-                    SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = userSession.edit();
-                    editor.clear();
-                    editor.apply();
+        // Hapus session login
+        SharedPreferences userSession = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = userSession.edit();
+        editor.clear();
+        editor.apply();
 
-                    // Tampilkan dialog logout sukses
-                    showLogoutSuccessDialog();
-                })
-                .setNegativeButton("Tidak", null)
-                .show();
+        // Tampilkan dialog logout sukses
+        showLogoutSuccessDialog();
     }
 
     private void showLogoutSuccessDialog() {
