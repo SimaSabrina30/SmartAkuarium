@@ -5,6 +5,7 @@
     "project_id": "smartakuarium",
     "storage_bucket": "smartakuarium.firebasestorage.app"
   },
+  
   "client": [
     {
       "client_info": {
