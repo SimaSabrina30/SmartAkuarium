@@ -1,9 +1,11 @@
 package com.sima.smartakuarium;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,7 @@ public class notifikasi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifikasi);
 
-        View mainLayout = findViewById(R.id.main); // pastikan di XML ada ID "main"
+        View mainLayout = findViewById(R.id.main);
         ViewCompat.setOnApplyWindowInsetsListener(mainLayout, (v, insets) -> {
             Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(
@@ -58,13 +60,33 @@ public class notifikasi extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("notifikasi", MODE_PRIVATE);
         loadNotifikasi();
+
+        adapter.setOnDeleteClickListener(position -> {
+            notifikasiList.remove(position);
+            simpanUlangHistori();
+            adapter.notifyItemRemoved(position);
+        });
+
+        Button btnHapusSemua = findViewById(R.id.btn_hapus);
+        btnHapusSemua.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Konfirmasi")
+                    .setMessage("Yakin ingin menghapus semua notifikasi?")
+                    .setPositiveButton("Ya", (dialog, which) -> {
+                        sharedPreferences.edit().remove("histori").apply();
+                        notifikasiList.clear();
+                        adapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton("Batal", null)
+                    .show();
+        });
     }
 
     private void loadNotifikasi() {
         notifikasiList.clear();
         try {
             JSONArray array = new JSONArray(sharedPreferences.getString("histori", "[]"));
-            for (int i = array.length() - 1; i >= 0; i--) { // terbaru di atas
+            for (int i = array.length() - 1; i >= 0; i--) {
                 JSONObject obj = array.getJSONObject(i);
                 notifikasiList.add(new NotifikasiItem(obj.getString("pesan"), obj.getString("waktu")));
             }
@@ -72,6 +94,21 @@ public class notifikasi extends AppCompatActivity {
             e.printStackTrace();
         }
         adapter.notifyDataSetChanged();
+    }
+
+    private void simpanUlangHistori() {
+        JSONArray array = new JSONArray();
+        for (NotifikasiItem item : notifikasiList) {
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put("pesan", item.getPesan());
+                obj.put("waktu", item.getWaktu());
+                array.put(obj);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        sharedPreferences.edit().putString("histori", array.toString()).apply();
     }
 
     public static void simpanNotifikasi(SharedPreferences prefs, String pesan, String waktu) {
