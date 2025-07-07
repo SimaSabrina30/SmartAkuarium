@@ -20,13 +20,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class detailakuarium extends AppCompatActivity {
     Button btnRefresh;
     TextView tvJam, tvTanggal, tvTds, tvSuhu, tvStatusTds, tvStatusSuhu;
     TextView tvIdealSuhu, tvIdealTds;
-    TextView tvTemperatureHistory; // New TextView for temperature history
+    TextView tvTemperatureHistory;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference logRef = db.collection("aquarium_logs");
@@ -47,17 +46,17 @@ public class detailakuarium extends AppCompatActivity {
         tvStatusSuhu = findViewById(R.id.tvStatusSuhu);
         tvIdealSuhu = findViewById(R.id.tvIdealSuhu);
         tvIdealTds = findViewById(R.id.tvIdealTds);
-        tvTemperatureHistory = findViewById(R.id.tvTemperatureHistory); // Initialize the new TextView
+        tvTemperatureHistory = findViewById(R.id.tvTemperatureHistory);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
 
         getLatestLog();
-        getTemperatureHistory(); // Call the new method to fetch history
+        getTemperatureHistory();
         displayIdealSettings();
 
         btnRefresh.setOnClickListener(view -> {
             getLatestLog();
-            getTemperatureHistory(); // Refresh history as well
+            getTemperatureHistory();
         });
     }
 
@@ -80,27 +79,39 @@ public class detailakuarium extends AppCompatActivity {
                         tvTds.setText("TDS: " + (tds != null ? String.format(Locale.getDefault(), "%.2f", tds) : "-") + " ppm");
                         tvSuhu.setText("Suhu: " + (suhu != null ? String.format(Locale.getDefault(), "%.2f", suhu) : "-") + "°C");
 
+                        // Status Suhu
                         String statusSuhu = "-";
                         if (suhu != null) {
                             if (suhu < 25) {
                                 statusSuhu = "Rendah";
+                                tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.holo_orange_dark)); // Kuning
                             } else if (suhu <= 30) {
                                 statusSuhu = "Normal";
+                                tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.holo_green_dark)); // Hijau
                             } else {
                                 statusSuhu = "Tinggi";
+                                tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.holo_red_dark)); // Merah
                             }
+                        } else {
+                            tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.black));
                         }
                         tvStatusSuhu.setText("Status Suhu: " + statusSuhu);
 
+                        // Status TDS
                         String statusTDS = "-";
                         if (tds != null) {
                             if (tds < 50) {
                                 statusTDS = "Rendah";
+                                tvStatusTds.setTextColor(getResources().getColor(android.R.color.holo_orange_dark)); // Kuning
                             } else if (tds <= 500) {
                                 statusTDS = "Normal";
+                                tvStatusTds.setTextColor(getResources().getColor(android.R.color.holo_green_dark)); // Hijau
                             } else {
                                 statusTDS = "Tinggi";
+                                tvStatusTds.setTextColor(getResources().getColor(android.R.color.holo_red_dark)); // Merah
                             }
+                        } else {
+                            tvStatusTds.setTextColor(getResources().getColor(android.R.color.black));
                         }
                         tvStatusTds.setText("Status TDS: " + statusTDS);
 
@@ -111,7 +122,9 @@ public class detailakuarium extends AppCompatActivity {
                         tvTds.setText("TDS: -");
                         tvSuhu.setText("Suhu: -");
                         tvStatusSuhu.setText("Status Suhu: -");
+                        tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.black));
                         tvStatusTds.setText("Status TDS: -");
+                        tvStatusTds.setTextColor(getResources().getColor(android.R.color.black));
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -121,12 +134,13 @@ public class detailakuarium extends AppCompatActivity {
                     tvTds.setText("TDS: -");
                     tvSuhu.setText("Suhu: -");
                     tvStatusSuhu.setText("Status Suhu: -");
+                    tvStatusSuhu.setTextColor(getResources().getColor(android.R.color.black));
                     tvStatusTds.setText("Status TDS: -");
+                    tvStatusTds.setTextColor(getResources().getColor(android.R.color.black));
                 });
     }
 
     private void getTemperatureHistory() {
-        // Calculate the timestamp for 24 hours ago
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR_OF_DAY, -24);
         Date twentyFourHoursAgo = cal.getTime();
@@ -138,24 +152,21 @@ public class detailakuarium extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         Map<String, Double> hourlyTemperatures = new HashMap<>();
                         SimpleDateFormat hourFormat = new SimpleDateFormat("HH", Locale.getDefault());
-                        SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault()); // For more detailed display
+                        SimpleDateFormat fullDateFormat = new SimpleDateFormat("dd/MM HH:mm", Locale.getDefault());
 
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             Date logDate = doc.getDate("date");
                             Double suhu = doc.getDouble("suhu_air");
-
                             if (logDate != null && suhu != null) {
                                 String hourKey = hourFormat.format(logDate);
-                                // Store the latest temperature for each hour to avoid too much data
                                 hourlyTemperatures.put(hourKey, suhu);
                             }
                         }
 
                         StringBuilder historyBuilder = new StringBuilder("Riwayat Suhu (24 Jam Terakhir):\n");
-                        // Iterate through the last 24 hours to display history
                         Calendar displayCal = Calendar.getInstance();
                         for (int i = 0; i < 24; i++) {
-                            displayCal.add(Calendar.HOUR_OF_DAY, -1); // Go back one hour
+                            displayCal.add(Calendar.HOUR_OF_DAY, -1);
                             String hourKey = hourFormat.format(displayCal.getTime());
                             Double temp = hourlyTemperatures.get(hourKey);
 

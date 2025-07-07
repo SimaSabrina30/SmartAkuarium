@@ -142,29 +142,63 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/tvTds"
-                        android:text="TDS: -"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    <!-- ⬇️ Bagian TDS & SUHU Horizontal -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:weightSum="2">
 
-                    <TextView
-                        android:id="@+id/tvStatusTds"
-                        android:text="Status TDS: -"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        <!-- Kolom Kiri: TDS -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingEnd="8dp">
 
-                    <TextView
-                        android:id="@+id/tvSuhu"
-                        android:text="Suhu: -"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvTds"
+                                android:text="TDS: -"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/tvStatusSuhu"
-                        android:text="Status Suhu: -"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/tvStatusTds"
+                                android:text="Status TDS: -"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <!-- Kolom Kanan: Suhu -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="end"
+                            android:paddingStart="8dp">
+
+                            <TextView
+                                android:id="@+id/tvSuhu"
+                                android:text="Suhu: -"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tvStatusSuhu"
+                                android:text="Status Suhu: -"
+                                android:textSize="14sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!-- ⬆️ END Bagian Horizontal -->
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -178,7 +212,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -212,7 +246,7 @@
                         android:text="Memuat riwayat suhu..."
                         android:maxLines="24"
                         android:scrollbars="vertical"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
